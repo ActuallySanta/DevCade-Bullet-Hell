@@ -8,13 +8,15 @@ public abstract class PlayerState
     
     protected Animator anim;
     protected PlayerController controller;
+    protected PlayerData data;
 
-    public PlayerState(string animName, float startTime, Animator anim, PlayerController controller)
+    public PlayerState(string animName, float startTime, Animator anim, PlayerController controller, PlayerData data)
     {
         this.animName = animName;
         this.startTime = Time.time;
         this.anim = anim;
         this.controller = controller;
+        this.data = data; 
     }
 
     public abstract void DoChecks();
