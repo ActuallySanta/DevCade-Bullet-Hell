@@ -5,12 +5,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerData data;
     [SerializeField] Animator anim;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] PlayerInputController input;
 
-    PlayerStateMachine stateMachine;
-
+    private PlayerStateMachine stateMachine;
     private Player player;
-
-    [SerializeField] private int playerID = 0;
 
     //Player Input
     public Vector2 inputVector { get; private set; }
@@ -21,7 +19,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        player = ReInput.players.GetPlayer(playerID);
+        player = input.player;
 
         stateMachine = new PlayerStateMachine();
 
