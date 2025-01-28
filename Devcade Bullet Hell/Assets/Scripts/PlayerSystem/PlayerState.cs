@@ -10,10 +10,9 @@ public abstract class PlayerState
     protected PlayerController controller;
     protected PlayerData data;
 
-    public PlayerState(string animName, float startTime, Animator anim, PlayerController controller, PlayerData data)
+    public PlayerState(string animName, Animator anim, PlayerController controller, PlayerData data)
     {
         this.animName = animName;
-        this.startTime = Time.time;
         this.anim = anim;
         this.controller = controller;
         this.data = data; 
@@ -25,7 +24,10 @@ public abstract class PlayerState
 
     public abstract void PhysicsUpdate();
 
-    public abstract void OnEnter();
+    public virtual void OnEnter()
+    {
+        startTime = Time.time;
+    }
 
     public abstract void OnExit();
 }
