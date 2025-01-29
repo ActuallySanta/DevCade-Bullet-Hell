@@ -8,7 +8,7 @@ public class PlayerWeaponHandler : MonoBehaviour
     public List<PlayerWeaponData> activeWeapons = new List<PlayerWeaponData>();
     public PlayerData data;
     
-    [SerializeField] GameObject[] firePoints = new GameObject[8];
+    [SerializeField] GameObject[] firePoints = new GameObject[16];
 
     [SerializeField] PlayerInputController input;
 
@@ -64,6 +64,8 @@ public class PlayerWeaponHandler : MonoBehaviour
                     DestroyAfterTime destroy = bullet.GetComponent<DestroyAfterTime>();
                     destroy.destroyTimer = weapon.bulletLifeTime;
                 }
+
+                yield return new WaitForSeconds(weapon.timeBetweenShots);
 
             }
 

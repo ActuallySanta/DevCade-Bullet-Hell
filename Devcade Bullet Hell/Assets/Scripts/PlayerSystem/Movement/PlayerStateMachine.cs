@@ -16,8 +16,6 @@ public class PlayerStateMachine : MonoBehaviour
     {
         if (CurrState != null)
         {
-            Debug.Log(destinationState);
-
             CurrState.OnExit();
             CurrState = destinationState;
             CurrState.OnEnter();

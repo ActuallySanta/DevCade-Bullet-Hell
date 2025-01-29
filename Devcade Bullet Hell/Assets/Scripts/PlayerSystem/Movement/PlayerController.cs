@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
         
 
 
-        stateMachine.CurrState.LogicUpdate();
         stateMachine.CurrState.DoChecks();
+        stateMachine.CurrState.LogicUpdate();
     }
 
     private void FixedUpdate()
