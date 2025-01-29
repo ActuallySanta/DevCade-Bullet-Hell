@@ -25,9 +25,8 @@ public class PlayerWeaponData : ScriptableObject
     public float bulletLifeTime = -1f;
 
 
-    [Tooltip("How many fire points are used per fire action")]
-    [Range(1,16)]
-    public int firePointsUsed = 1; 
+    [Tooltip("By how many times is the maximum amount of firing points being divided by (may only be factors of the maximum amount")]
+    public float firePointsUsed = 1; 
 
     [Tooltip("The magnitude of the screenshake per shot")]
     public float firingScreenShake = 1f;

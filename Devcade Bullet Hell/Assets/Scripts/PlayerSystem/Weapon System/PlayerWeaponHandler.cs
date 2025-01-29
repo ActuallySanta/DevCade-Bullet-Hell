@@ -7,7 +7,7 @@ public class PlayerWeaponHandler : MonoBehaviour
 {
     public List<PlayerWeaponData> activeWeapons = new List<PlayerWeaponData>();
     public PlayerData data;
-    
+
     [SerializeField] GameObject[] firePoints = new GameObject[16];
 
     [SerializeField] PlayerInputController input;
@@ -45,28 +45,32 @@ public class PlayerWeaponHandler : MonoBehaviour
         {
             Debug.Log("Fired: " + weapon.name);
 
-            for (int i = 0; i < weapon.firePointsUsed; i++)
+            for (float i = 0; i < firePoints.Length; i++)
             {
-                Debug.Log("Used FirePoint: " + 1);
-
-                GameObject bullet = Instantiate(weapon.bulletPrefab, firePoints[i].transform.position, firePoints[i].transform.rotation);
-
-                bullet.transform.parent = null;
-
-                Rigidbody2D bRB = bullet.GetComponent<Rigidbody2D>();
-
-                if (bRB != null)
+                //Only use the firepoints
+                if ((i % weapon.firePointsUsed) == 0)
                 {
-                    //Add the predetermined force to the bullet
-                    bRB.AddForce(bullet.transform.up * weapon.bulletSpeed, ForceMode2D.Impulse);
+                    Debug.Log("Used Firepoint: " + i);
+                    Debug.Log(weapon.firePointsUsed / firePoints.Length);
 
-                    //Destroy the bullet after a predetermined time
-                    DestroyAfterTime destroy = bullet.GetComponent<DestroyAfterTime>();
-                    destroy.destroyTimer = weapon.bulletLifeTime;
+                    GameObject bullet = Instantiate(weapon.bulletPrefab, firePoints[(int)i].transform.position, firePoints[(int)i].transform.rotation);
+
+                    bullet.transform.parent = null;
+
+                    Rigidbody2D bRB = bullet.GetComponent<Rigidbody2D>();
+
+                    if (bRB != null)
+                    {
+                        //Add the predetermined force to the bullet
+                        bRB.AddForce(bullet.transform.up * weapon.bulletSpeed, ForceMode2D.Impulse);
+
+                        //Destroy the bullet after a predetermined time
+                        DestroyAfterTime destroy = bullet.GetComponent<DestroyAfterTime>();
+                        destroy.destroyTimer = weapon.bulletLifeTime;
+                    }
+
+                    yield return new WaitForSeconds(weapon.timeBetweenShots);
                 }
-
-                yield return new WaitForSeconds(weapon.timeBetweenShots);
-
             }
 
             yield return new WaitForSeconds(data.timeBetweenWeapons);
