@@ -26,7 +26,7 @@ public class PlayerWeaponData : ScriptableObject
 
 
     [Tooltip("How many fire points are used per fire action")]
-    [Range(1,17)]
+    [Range(1,16)]
     public int firePointsUsed = 1; 
 
     [Tooltip("The magnitude of the screenshake per shot")]
