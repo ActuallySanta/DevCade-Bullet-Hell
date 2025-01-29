@@ -5,20 +5,24 @@ using UnityEngine;
 using Rewired;
 public class PlayerWeaponHandler : MonoBehaviour
 {
-    [SerializeField] List<PlayerWeaponData> activeWeapons = new List<PlayerWeaponData>();
+    public List<PlayerWeaponData> activeWeapons = new List<PlayerWeaponData>();
+    public PlayerData data;
+    
     [SerializeField] GameObject[] firePoints = new GameObject[8];
 
     [SerializeField] PlayerInputController input;
-    [SerializeField] PlayerData data;
 
     private Player player;
-    private bool canFire = true;
-    private bool isFiring = false;
+    private bool canFire;
+    private bool isFiring;
     private float fireTime;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        canFire = true;
+        isFiring = false;
+
         player = input.player;
     }
 
@@ -35,6 +39,8 @@ public class PlayerWeaponHandler : MonoBehaviour
     private IEnumerator FireAction()
     {
         isFiring = true;
+
+        //Fire every weapon the player has equipped
         foreach (PlayerWeaponData weapon in activeWeapons)
         {
             Debug.Log("Fired: " + weapon.name);
@@ -42,6 +48,23 @@ public class PlayerWeaponHandler : MonoBehaviour
             for (int i = 0; i < weapon.firePointsUsed; i++)
             {
                 Debug.Log("Used FirePoint: " + 1);
+
+                GameObject bullet = Instantiate(weapon.bulletPrefab, firePoints[i].transform.position, firePoints[i].transform.rotation);
+
+                bullet.transform.parent = null;
+
+                Rigidbody2D bRB = bullet.GetComponent<Rigidbody2D>();
+
+                if (bRB != null)
+                {
+                    //Add the predetermined force to the bullet
+                    bRB.AddForce(bullet.transform.up * weapon.bulletSpeed, ForceMode2D.Impulse);
+
+                    //Destroy the bullet after a predetermined time
+                    DestroyAfterTime destroy = bullet.GetComponent<DestroyAfterTime>();
+                    destroy.destroyTimer = weapon.bulletLifeTime;
+                }
+
             }
 
             yield return new WaitForSeconds(data.timeBetweenWeapons);

@@ -2,7 +2,7 @@ using UnityEngine;
 using Rewired;
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] PlayerData data;
+    public PlayerData data;
     [SerializeField] Animator anim;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] PlayerInputController input;
@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public Player_MoveState moveState { get; private set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
         player = input.player;
 
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Get player movement input
-        inputVector = new Vector2(player.GetAxis("HorizontalMovement"), player.GetAxis("VerticalMovement"));
+        inputVector = new Vector2(player.GetAxisRaw("HorizontalMovement"), player.GetAxisRaw("VerticalMovement"));
         
 
 

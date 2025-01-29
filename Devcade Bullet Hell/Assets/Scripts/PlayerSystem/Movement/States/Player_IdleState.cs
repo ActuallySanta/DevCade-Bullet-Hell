@@ -10,7 +10,7 @@ public class Player_IdleState : PlayerState
 
     public override void DoChecks()
     {
-        if (controller.inputVector != Vector2.zero) isMoving = true;
+        if (controller.inputVector.x >= 0.5f && controller.inputVector.y >= 0.5f) isMoving = true;
         else isMoving = false;
     }
 

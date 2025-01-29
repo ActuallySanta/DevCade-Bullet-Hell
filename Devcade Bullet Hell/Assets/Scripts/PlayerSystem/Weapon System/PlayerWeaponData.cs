@@ -17,6 +17,11 @@ public class PlayerWeaponData : ScriptableObject
     [Tooltip("How many fire points are used per fire action")]
     public float bulletsPerBurst = 1f;
 
+    [Tooltip("How much force is added to the bullet on instantiation")]
+    public float bulletSpeed = 20f;
+    [Tooltip("How long will the bullet exist for? Enter -1 for unlimited time")]
+    public float bulletLifeTime = -1f;
+
     [Tooltip("How many fire points are used per fire action")]
     [Range(0,8)]
     public int firePointsUsed = 1; 
