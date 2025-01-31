@@ -5,8 +5,9 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] Animator anim;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] EnemyData data;
     [SerializeField] NavMeshAgent navAgent;
+    
+    public EnemyData data;
 
     public List<Transform> patrolPoints = new List<Transform>();
 
