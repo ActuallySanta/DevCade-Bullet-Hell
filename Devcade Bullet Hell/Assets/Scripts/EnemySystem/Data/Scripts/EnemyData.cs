@@ -9,5 +9,6 @@ public class EnemyData : ScriptableObject
     public float moveSpeed = 5f;
     [Tooltip("How many points can the enemy use to patrol through")]
     public float maxPatrolPoints;
-
+    [Tooltip("How long will each enemy spend at each patrol point")]
+    public float patrolPointWaitTime = 1f; 
 }

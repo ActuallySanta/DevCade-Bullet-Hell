@@ -1,16 +1,42 @@
 using UnityEngine;
 
-public class EnemyMoveState : MonoBehaviour
+public class EnemyMoveState : EnemyState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public EnemyMoveState(string animName, Animator anim, EnemyController controller, EnemyData data, EnemyStateMachine stateMachine) : base(animName, anim, controller, data, stateMachine)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    Transform targetPatrolPoint;
+
+    public override void DoChecks()
     {
-        
+        if (Vector2.Distance(controller.transform.position, targetPatrolPoint.position) < .5f)
+        {
+            stateMachine.ChangeState(controller.idleState);
+        }
+    }
+
+    public override void LogicUpdate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+
+        int randomPatrolPoint = (int)Random.Range(0, data.maxPatrolPoints);
+        targetPatrolPoint = controller.patrolPoints[randomPatrolPoint];
+        controller.SetPatrolDestination(targetPatrolPoint);
+    }
+
+    public override void OnExit()
+    {
+        base.OnExit();
+    }
+
+    public override void PhysicsUpdate()
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -6,13 +6,13 @@ public abstract class EnemyState
     public string animName;
     public float startTime;
 
-    protected PlayerStateMachine stateMachine;
+    protected EnemyStateMachine stateMachine;
 
     protected Animator anim;
     protected EnemyController controller;
     protected EnemyData data;
 
-    public EnemyState(string animName, Animator anim, EnemyController controller, EnemyData data,PlayerStateMachine stateMachine)
+    public EnemyState(string animName, Animator anim, EnemyController controller, EnemyData data,EnemyStateMachine stateMachine)
     {
         this.animName = animName;
         this.anim = anim;
