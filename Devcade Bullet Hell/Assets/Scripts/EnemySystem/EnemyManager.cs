@@ -6,7 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     public EnemyRoundData[] roundDatas;
 
-    Transform[] patrolPoints;
+    [SerializeField] Transform[] patrolPoints;
 
     [SerializeField] List<Transform> spawnPoints = new List<Transform>();
     
@@ -25,7 +25,7 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.P)) RoundStart(roundDatas[0]);
     }
 
     private void SpawnEnemy(int enemyInd, EnemyRoundData data)
@@ -44,7 +44,6 @@ public class EnemyManager : MonoBehaviour
 
             activePatrolPoints.RemoveAt(randomPatrolPointInd);
         }
-
     }
 
     private IEnumerator RoundStart(EnemyRoundData roundData)

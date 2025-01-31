@@ -18,7 +18,7 @@ public class EnemyMoveState : EnemyState
 
     public override void LogicUpdate()
     {
-        throw new System.NotImplementedException();
+        controller.SetPatrolDestination(targetPatrolPoint);
     }
 
     public override void OnEnter()

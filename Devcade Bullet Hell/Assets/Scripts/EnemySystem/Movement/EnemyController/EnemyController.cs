@@ -4,8 +4,6 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] Animator anim;
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] NavMeshAgent navAgent;
     
     public EnemyData data;
 
@@ -43,6 +41,6 @@ public class EnemyController : MonoBehaviour
     /// <param name="patrolPoint">The transform of the patrol point to move to</param>
     public void SetPatrolDestination(Transform patrolPoint)
     {
-        navAgent.SetDestination(patrolPoint.position);
+        transform.position = Vector2.MoveTowards(transform.position, patrolPoint.position, data.moveSpeed * Time.deltaTime);
     }
 }
