@@ -1,16 +1,33 @@
 using UnityEngine;
 
-public class EnemyDeadState : MonoBehaviour
+public class EnemyDeadState : EnemyState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public EnemyDeadState(string animName, Animator anim, EnemyController controller, EnemyData data, EnemyStateMachine stateMachine) : base(animName, anim, controller, data, stateMachine)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void DoChecks()
     {
-        
+        throw new System.NotImplementedException();
+    }
+
+    public override void LogicUpdate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+    }
+
+    public override void OnExit()
+    {
+        base.OnExit();
+    }
+
+    public override void PhysicsUpdate()
+    {
+        throw new System.NotImplementedException();
     }
 }

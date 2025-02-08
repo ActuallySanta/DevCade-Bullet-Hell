@@ -8,7 +8,6 @@ public class EnemyIdleState : EnemyState
 
     public override void DoChecks()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void LogicUpdate()
@@ -28,6 +27,5 @@ public class EnemyIdleState : EnemyState
 
     public override void PhysicsUpdate()
     {
-        throw new System.NotImplementedException();
     }
 }

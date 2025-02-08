@@ -20,7 +20,14 @@ public class EnemyController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        stateMachine = new EnemyStateMachine();
+        idleState = new EnemyIdleState("idle", anim, this, data, stateMachine);
+        moveState = new EnemyMoveState("move", anim, this, data, stateMachine);
+        hurtState = new EnemyHurtState("hurt", anim, this, data, stateMachine);
+        deadState = new EnemyDeadState("dead", anim, this, data, stateMachine);
+        attackState = new EnemyAttackState("attack", anim, this, data, stateMachine);
+
+        stateMachine.Initialize(idleState);
     }
 
     // Update is called once per frame
