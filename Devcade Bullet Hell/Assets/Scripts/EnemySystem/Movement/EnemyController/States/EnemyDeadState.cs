@@ -8,17 +8,18 @@ public class EnemyDeadState : EnemyState
 
     public override void DoChecks()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void LogicUpdate()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void OnEnter()
     {
         base.OnEnter();
+        controller.canBeHurt = false;
     }
 
     public override void OnExit()
@@ -28,6 +29,6 @@ public class EnemyDeadState : EnemyState
 
     public override void PhysicsUpdate()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

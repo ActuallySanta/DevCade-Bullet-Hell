@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class EnemyController : MonoBehaviour
+public abstract class EnemyController : MonoBehaviour
 {
     [SerializeField] Animator anim;
     
@@ -17,6 +17,8 @@ public class EnemyController : MonoBehaviour
     public EnemyDeadState deadState { get; private set; }
     public EnemyAttackState attackState { get; private set; }
 
+    public bool canBeHurt = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,7 +27,6 @@ public class EnemyController : MonoBehaviour
         moveState = new EnemyMoveState("move", anim, this, data, stateMachine);
         hurtState = new EnemyHurtState("hurt", anim, this, data, stateMachine);
         deadState = new EnemyDeadState("dead", anim, this, data, stateMachine);
-        attackState = new EnemyAttackState("attack", anim, this, data, stateMachine);
 
         stateMachine.Initialize(idleState);
     }
@@ -40,6 +41,11 @@ public class EnemyController : MonoBehaviour
     private void FixedUpdate()
     {
         stateMachine.CurrState.PhysicsUpdate();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 
     /// <summary>

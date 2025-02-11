@@ -62,11 +62,11 @@ public class PlayerWeaponHandler : MonoBehaviour
                     if (bRB != null)
                     {
                         //Add the predetermined force to the bullet
-                        bRB.AddForce(bullet.transform.up * weapon.bulletSpeed, ForceMode2D.Impulse);
+                        bRB.AddForce(bullet.transform.up * weapon.bulletData.bulletSpeed, ForceMode2D.Impulse);
 
                         //Destroy the bullet after a predetermined time
                         DestroyAfterTime destroy = bullet.GetComponent<DestroyAfterTime>();
-                        destroy.destroyTimer = weapon.bulletLifeTime;
+                        destroy.destroyTimer = weapon.bulletData.bulletLifeTime;
                     }
 
                     yield return new WaitForSeconds(weapon.timeBetweenShots);

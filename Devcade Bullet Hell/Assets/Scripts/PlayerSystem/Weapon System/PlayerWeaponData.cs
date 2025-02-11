@@ -10,20 +10,12 @@ public class PlayerWeaponData : ScriptableObject
     public string weaponInfo; 
 
     [Header("Weapon Stats")]
-    [Tooltip("How much damage each bullet does")]
-    public float bulletDamage = 1f;
     [Tooltip("How many bursts per fire action")]
     public float burstCount = 1f; 
     [Tooltip("How many fire points are used per fire action")]
     public float bulletsPerBurst = 1f;
     [Tooltip("How much time between each shot in a burst")]
     public float timeBetweenShots = -1f;
-
-    [Tooltip("How much force is added to the bullet on instantiation")]
-    public float bulletSpeed = 20f;
-    [Tooltip("How long will the bullet exist for? Enter -1 for unlimited time")]
-    public float bulletLifeTime = -1f;
-
 
     [Tooltip("By how many times is the maximum amount of firing points being divided by (may only be factors of the maximum amount")]
     public float firePointsUsed = 1; 
@@ -36,6 +28,8 @@ public class PlayerWeaponData : ScriptableObject
     public GameObject bulletPrefab;
     [Tooltip("The particle spawned in when the player fires")]
     public GameObject firingParticle;
+    [Tooltip("The data of the bullet being fired")]
+    public BulletData bulletData;
 
 
 }

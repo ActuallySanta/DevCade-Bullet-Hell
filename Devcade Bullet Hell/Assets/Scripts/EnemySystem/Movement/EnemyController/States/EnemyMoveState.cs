@@ -8,19 +8,6 @@ public class EnemyMoveState : EnemyState
 
     Transform targetPatrolPoint;
 
-    public override void DoChecks()
-    {
-        if (Vector2.Distance(controller.transform.position, targetPatrolPoint.position) < .5f)
-        {
-            stateMachine.ChangeState(controller.idleState);
-        }
-    }
-
-    public override void LogicUpdate()
-    {
-        controller.SetPatrolDestination(targetPatrolPoint);
-    }
-
     public override void OnEnter()
     {
         base.OnEnter();
@@ -33,10 +20,25 @@ public class EnemyMoveState : EnemyState
     public override void OnExit()
     {
         base.OnExit();
+    } 
+
+    public override void DoChecks()
+    {
+        if (targetPatrolPoint == null) Debug.Log("target is null");
+
+        if (Vector2.Distance(controller.transform.position, targetPatrolPoint.position) < .5f)
+        {
+            stateMachine.ChangeState(controller.idleState);
+        }
+    }
+
+    public override void LogicUpdate()
+    {
+        controller.SetPatrolDestination(targetPatrolPoint);
     }
 
     public override void PhysicsUpdate()
     {
-        throw new System.NotImplementedException();
+
     }
 }

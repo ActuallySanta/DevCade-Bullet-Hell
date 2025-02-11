@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyAttackState : EnemyState
+public abstract class EnemyAttackState : EnemyState
 {
     public EnemyAttackState(string animName, Animator anim, EnemyController controller, EnemyData data, EnemyStateMachine stateMachine) : base(animName, anim, controller, data, stateMachine)
     {
@@ -19,6 +19,7 @@ public class EnemyAttackState : EnemyState
     public override void OnEnter()
     {
         base.OnEnter();
+        FireWeapon();
     }
 
     public override void OnExit()
@@ -30,4 +31,6 @@ public class EnemyAttackState : EnemyState
     {
         throw new System.NotImplementedException();
     }
+
+    protected abstract void FireWeapon();
 }
