@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum AttackForm
+{
+    meleeAttack,
+    rangedAttack,
+}
+
 [CreateAssetMenu(fileName = "New Enemy Data", menuName = "Data/Enemy/Create New Enemy Data")]
 public class EnemyData : ScriptableObject
 {
@@ -13,6 +19,9 @@ public class EnemyData : ScriptableObject
     public float patrolPointWaitTime = 1f;
     [Tooltip("How long will the enemy recoil after being hurt")]
     public float enemyHurtWaitTime = .25f;
+    [Tooltip("What kind of attack does the enemy use")]
+    public AttackForm attackType;
+
 
     [Header("Ranged Attack")]
     [Tooltip("The bullets that the enemy can fire")]

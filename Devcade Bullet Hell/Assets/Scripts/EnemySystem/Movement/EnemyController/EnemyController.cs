@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public abstract class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
-    [SerializeField] Animator anim;
-    
+    [SerializeField] private Animator anim;
+
     public EnemyData data;
 
     public List<Transform> patrolPoints = new List<Transform>();
@@ -15,37 +15,39 @@ public abstract class EnemyController : MonoBehaviour
     public EnemyMoveState moveState { get; private set; }
     public EnemyHurtState hurtState { get; private set; }
     public EnemyDeadState deadState { get; private set; }
-    public EnemyAttackState attackState { get; private set; }
-
+    public EnemyMeleeAttackState meleeAttackState { get; private set; }
     public bool canBeHurt = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Start()
     {
         stateMachine = new EnemyStateMachine();
         idleState = new EnemyIdleState("idle", anim, this, data, stateMachine);
         moveState = new EnemyMoveState("move", anim, this, data, stateMachine);
         hurtState = new EnemyHurtState("hurt", anim, this, data, stateMachine);
         deadState = new EnemyDeadState("dead", anim, this, data, stateMachine);
-
+        meleeAttackState = new EnemyMeleeAttackState("meleeAttack", anim, this, data, stateMachine);
         stateMachine.Initialize(idleState);
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         stateMachine.CurrState.DoChecks();
         stateMachine.CurrState.LogicUpdate();
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         stateMachine.CurrState.PhysicsUpdate();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.layer == 7)//Player bullet
+        {
+            stateMachine.ChangeState(hurtState);
+        }
     }
 
     /// <summary>
