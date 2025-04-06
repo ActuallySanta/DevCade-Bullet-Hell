@@ -38,6 +38,5 @@ public class EnemyHurtState : EnemyState
 
     public override void PhysicsUpdate()
     {
-        throw new System.NotImplementedException();
     }
 }

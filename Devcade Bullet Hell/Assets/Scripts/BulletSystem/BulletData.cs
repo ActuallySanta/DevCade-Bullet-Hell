@@ -9,6 +9,7 @@ public enum BulletType
     Bouncy,
 }
 
+[CreateAssetMenu(fileName = "New Standard Bullet Data", menuName = "Data/Bullet/Create New Standard Bullet Data")]
 public class BulletData : ScriptableObject
 {
     [Tooltip("How much damage each bullet does")]

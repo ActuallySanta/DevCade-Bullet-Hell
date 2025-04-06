@@ -7,7 +7,9 @@ public class EnemyController : MonoBehaviour
 
     public EnemyData data;
 
-    public List<Transform> patrolPoints = new List<Transform>();
+    float currHealth;
+
+    [HideInInspector] public List<Transform> patrolPoints = new List<Transform>();
 
     private EnemyStateMachine stateMachine;
 
@@ -16,11 +18,13 @@ public class EnemyController : MonoBehaviour
     public EnemyHurtState hurtState { get; private set; }
     public EnemyDeadState deadState { get; private set; }
     public EnemyMeleeAttackState meleeAttackState { get; private set; }
-    public bool canBeHurt = true;
+    [HideInInspector] public bool canBeHurt = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
+        currHealth = data.maxHealth;
+
         stateMachine = new EnemyStateMachine();
         idleState = new EnemyIdleState("idle", anim, this, data, stateMachine);
         moveState = new EnemyMoveState("move", anim, this, data, stateMachine);
@@ -44,10 +48,28 @@ public class EnemyController : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 7)//Player bullet
+        if (collision.gameObject.layer == 7)//Player bullet layer
         {
-            stateMachine.ChangeState(hurtState);
+            BulletController bullet = collision.gameObject.GetComponent<BulletController>();
+
+            currHealth -= bullet.data.bulletDamage;
+
+            //Check if you need to die
+            if (currHealth <= 0)
+            {
+                stateMachine.ChangeState(deadState);
+            }
+            else
+            {
+                stateMachine.ChangeState(hurtState);
+            }
         }
+    }
+
+    public void DestroyEnemy()
+    {
+        Debug.Log("Destroyed: " + name);
+        Destroy(gameObject);
     }
 
     /// <summary>

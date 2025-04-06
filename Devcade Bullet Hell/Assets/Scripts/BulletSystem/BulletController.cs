@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public BulletData data;
+    public PlayerWeaponHandler owner;
+    private DestroyAfterTime destroy;
+    private Rigidbody2D rb;
 
-    // Update is called once per frame
-    void Update()
+    public void InitializeBullet(BulletData data, PlayerWeaponHandler playerController, Vector2 initialForce)
     {
-        
+        this.data = data;
+        owner = playerController;
+
+        //Destroy the bullet after a predetermined time
+        destroy = GetComponent<DestroyAfterTime>();
+
+        destroy.destroyTimer = data.bulletLifeTime;
+
+        //Add initial force
+        rb = GetComponent<Rigidbody2D>();
+        rb.AddForce(initialForce, ForceMode2D.Impulse);
     }
 }

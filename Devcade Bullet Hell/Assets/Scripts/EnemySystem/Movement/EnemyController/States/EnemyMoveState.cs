@@ -12,7 +12,7 @@ public class EnemyMoveState : EnemyState
     {
         base.OnEnter();
 
-        int randomPatrolPoint = (int)Random.Range(0, data.maxPatrolPoints);
+        int randomPatrolPoint = Random.Range(0, controller.patrolPoints.Count);
         targetPatrolPoint = controller.patrolPoints[randomPatrolPoint];
         controller.SetPatrolDestination(targetPatrolPoint);
     }
@@ -20,7 +20,7 @@ public class EnemyMoveState : EnemyState
     public override void OnExit()
     {
         base.OnExit();
-    } 
+    }
 
     public override void DoChecks()
     {

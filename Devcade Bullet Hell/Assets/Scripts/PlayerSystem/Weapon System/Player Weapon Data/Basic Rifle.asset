@@ -14,13 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Rifle
   weaponInfo: A standard issue, it's about as run of the mill as it gets
-  bulletDamage: 1
   burstCount: 1
   bulletsPerBurst: 4
   timeBetweenShots: 0
-  bulletSpeed: 20
-  bulletLifeTime: -1
-  firePointsUsed: 2
+  firePointsUsed: 16
   firingScreenShake: 4
   bulletPrefab: {fileID: 4298952333547029504, guid: 7e3bc9472777aa741b47a7039704e1fc, type: 3}
   firingParticle: {fileID: 0}
+  bulletData: {fileID: 11400000, guid: 0bb662282a241824eadadd359fdb4eb4, type: 2}

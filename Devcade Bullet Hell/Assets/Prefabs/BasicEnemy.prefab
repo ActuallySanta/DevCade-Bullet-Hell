@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4569188274189632903}
   - component: {fileID: 100392289012268772}
   - component: {fileID: 5322877514756222497}
+  - component: {fileID: -7648289146811723826}
   m_Layer: 0
   m_Name: BasicEnemy
   m_TagString: Untagged
@@ -147,3 +148,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-7648289146811723826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5963902604664176130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c23d2db0167824459ce912bd2635bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 5322877514756222497}
+  data: {fileID: 11400000, guid: 5426e77adcedf2e4c844da6087d9266c, type: 2}
+  patrolPoints: []
+  canBeHurt: 1

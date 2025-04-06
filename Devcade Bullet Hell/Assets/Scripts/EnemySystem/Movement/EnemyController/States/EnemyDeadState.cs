@@ -8,12 +8,12 @@ public class EnemyDeadState : EnemyState
 
     public override void DoChecks()
     {
-        
+        if (Time.time >= startTime + 1.5f) controller.DestroyEnemy();
     }
 
     public override void LogicUpdate()
     {
-        
+
     }
 
     public override void OnEnter()
@@ -29,6 +29,6 @@ public class EnemyDeadState : EnemyState
 
     public override void PhysicsUpdate()
     {
-        
+
     }
 }

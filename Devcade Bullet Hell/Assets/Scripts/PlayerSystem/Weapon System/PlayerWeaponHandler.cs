@@ -50,23 +50,16 @@ public class PlayerWeaponHandler : MonoBehaviour
                 //Only use the firepoints
                 if ((i % weapon.firePointsUsed) == 0)
                 {
-                    Debug.Log("Used Firepoint: " + i);
-                    Debug.Log(weapon.firePointsUsed / firePoints.Length);
-
                     GameObject bullet = Instantiate(weapon.bulletPrefab, firePoints[(int)i].transform.position, firePoints[(int)i].transform.rotation);
 
                     bullet.transform.parent = null;
 
-                    Rigidbody2D bRB = bullet.GetComponent<Rigidbody2D>();
+                    BulletController bController = bullet.GetComponent<BulletController>();
 
-                    if (bRB != null)
+                    if (bController != null)
                     {
-                        //Add the predetermined force to the bullet
-                        bRB.AddForce(bullet.transform.up * weapon.bulletData.bulletSpeed, ForceMode2D.Impulse);
-
-                        //Destroy the bullet after a predetermined time
-                        DestroyAfterTime destroy = bullet.GetComponent<DestroyAfterTime>();
-                        destroy.destroyTimer = weapon.bulletData.bulletLifeTime;
+                        //Initialize bullet
+                        bController.InitializeBullet(weapon.bulletData, this, bullet.transform.up * weapon.bulletData.bulletSpeed);
                     }
 
                     yield return new WaitForSeconds(weapon.timeBetweenShots);
