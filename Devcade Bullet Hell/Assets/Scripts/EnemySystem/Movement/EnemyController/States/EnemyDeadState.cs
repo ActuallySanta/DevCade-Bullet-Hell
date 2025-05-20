@@ -19,6 +19,7 @@ public class EnemyDeadState : EnemyState
     public override void OnEnter()
     {
         base.OnEnter();
+        GamePlayManager.Instance.UpdateScore(data.scoreValue);
         controller.canBeHurt = false;
     }
 

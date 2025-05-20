@@ -13,6 +13,9 @@ public class EnemyData : ScriptableObject
     public float maxHealth = 3f;
     [Tooltip("The movement speed of the enemy")]
     public float moveSpeed = 5f;
+    [Tooltip("How many points are awarded on death")]
+    public float scoreValue = 1000f;
+
     [Tooltip("How many points can the enemy use to patrol through")]
     public float maxPatrolPoints;
     [Tooltip("How long will each enemy spend at each patrol point")]
