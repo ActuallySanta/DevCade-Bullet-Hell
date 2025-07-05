@@ -18,7 +18,10 @@ public class PlayerWeaponData : ScriptableObject
     public float timeBetweenShots = -1f;
 
     [Tooltip("By how many times is the maximum amount of firing points being divided by (may only be factors of the maximum amount")]
-    public float firePointsUsed = 1; 
+    public float firePointsUsed = 1;
+
+    [Tooltip("How long to wait between the firing input and the shot actually being fired")]
+    public float chargeUpTime = 0f;
 
     [Tooltip("The magnitude of the screenshake per shot")]
     public float firingScreenShake = 1f;

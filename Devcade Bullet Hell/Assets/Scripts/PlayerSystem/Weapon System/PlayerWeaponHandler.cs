@@ -36,6 +36,7 @@ public class PlayerWeaponHandler : MonoBehaviour
         }
     }
 
+
     private IEnumerator FireAction()
     {
         isFiring = true;
@@ -43,6 +44,9 @@ public class PlayerWeaponHandler : MonoBehaviour
         //Fire every weapon the player has equipped
         foreach (PlayerWeaponData weapon in activeWeapons)
         {
+            //Wait for charge up time
+            yield return new WaitForSeconds(weapon.chargeUpTime);
+
             Debug.Log("Fired: " + weapon.name);
 
             for (float i = 0; i < firePoints.Length; i++)

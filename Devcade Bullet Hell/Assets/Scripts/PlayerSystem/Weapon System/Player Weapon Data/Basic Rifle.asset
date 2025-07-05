@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponInfo: A standard issue, it's about as run of the mill as it gets
   burstCount: 1
   bulletsPerBurst: 4
-  timeBetweenShots: 0
+  timeBetweenShots: 0.05
   firePointsUsed: 16
   firingScreenShake: 4
   bulletPrefab: {fileID: 4298952333547029504, guid: 7e3bc9472777aa741b47a7039704e1fc, type: 3}
