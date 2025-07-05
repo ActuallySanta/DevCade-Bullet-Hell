@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     private PlayerStateMachine stateMachine;
     private Player player;
 
+    public delegate void OnPlayerHurt(object sender,float newHealthVal);
+    public OnPlayerHurt onPlayerHurt;
+
     //Player Input
     public Vector2 inputVector { get; private set; }
 

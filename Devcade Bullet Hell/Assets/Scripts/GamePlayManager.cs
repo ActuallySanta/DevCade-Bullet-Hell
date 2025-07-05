@@ -2,7 +2,8 @@ using UnityEngine;
 using Rewired;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum PlayerMode
 {
@@ -38,8 +39,15 @@ public class GamePlayManager : MonoBehaviour
     public float currLives { get; private set; }
 
     [SerializeField] TMP_Text scoreText;
+    [SerializeField] Slider p1HealthBar;
+    [SerializeField] Slider p2HealthBar;
+    [SerializeField] GameObject playerUIGameObject;
 
     public static GamePlayManager Instance;
+
+    private GameObject p1;
+    private GameObject p2;
+
 
     private void Awake()
     {
@@ -51,49 +59,63 @@ public class GamePlayManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        DontDestroyOnLoad(Instance);
     }
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    /// <summary>
+    /// Spawns in the players
+    /// </summary>
+    void SpawnPlayers()
     {
         if (currMode == PlayerMode.SinglePlayer)
         {
-            GameObject p1 = Instantiate(playerPrefab, p1Spawnpoint);
+            p1 = Instantiate(playerPrefab, p1Spawnpoint);
 
             p1.transform.parent = null;
 
             p1.GetComponent<PlayerInputController>().InitializePlayer(0);
             p1.GetComponent<PlayerController>().data = p1Data;
+            p1.GetComponent<PlayerController>().onPlayerHurt += UpdatePlayerHealthBars;
             p1.GetComponent<PlayerWeaponHandler>().data = p1Data;
             p1.GetComponent<PlayerWeaponHandler>().activeWeapons = p1Weapons;
+            p1HealthBar.maxValue = p1Data.maxHealth;
         }
         else if (currMode == PlayerMode.TwoPlayer)
         {
-            GameObject p1 = Instantiate(playerPrefab, p1Spawnpoint);
+            p1 = Instantiate(playerPrefab, p1Spawnpoint);
 
             p1.transform.parent = null;
 
             p1.GetComponent<PlayerInputController>().InitializePlayer(0);
             p1.GetComponent<PlayerController>().data = p1Data;
+            p1.GetComponent<PlayerController>().onPlayerHurt += UpdatePlayerHealthBars;
             p1.GetComponent<PlayerWeaponHandler>().data = p1Data;
             p1.GetComponent<PlayerWeaponHandler>().activeWeapons = p1Weapons;
+            p1HealthBar.maxValue = p1Data.maxHealth;
 
-            GameObject p2 = Instantiate(playerPrefab, p1Spawnpoint);
+            p2 = Instantiate(playerPrefab, p1Spawnpoint);
 
             p2.transform.parent = null;
 
             p2.GetComponent<PlayerInputController>().InitializePlayer(1);
             p2.GetComponent<PlayerController>().data = p2Data;
+            p2.GetComponent<PlayerController>().onPlayerHurt += UpdatePlayerHealthBars;
             p2.GetComponent<PlayerWeaponHandler>().data = p2Data;
             p2.GetComponent<PlayerWeaponHandler>().activeWeapons = p2Weapons;
+            p2HealthBar.maxValue = p2Data.maxHealth;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Used by the UI buttons to select player count
+    /// </summary>
+    /// <param name="gameMode">how many players are in the game</param>
+    public void SelectGameMode(float gameMode)
     {
-
+        if (gameMode == 1) currMode = PlayerMode.SinglePlayer;
+        if (gameMode == 2) currMode = PlayerMode.TwoPlayer;
     }
 
     public void UpdateScore(float value)
@@ -103,5 +125,18 @@ public class GamePlayManager : MonoBehaviour
         currentScore += value;
 
         scoreText.text = "SCORE: " + currentScore.ToString();
+    }
+
+    public void UpdatePlayerHealthBars(object sender, float newHealthVal)
+    {
+        if ((GameObject)sender == p1) p1HealthBar.value = newHealthVal;
+
+        if ((GameObject)sender == p2) p2HealthBar.value = newHealthVal;
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("Game Scene");
+        playerUIGameObject.SetActive(true);
     }
 }
