@@ -7,7 +7,7 @@ public class BulletController : MonoBehaviour
     private DestroyAfterTime destroy;
     private Rigidbody2D rb;
 
-    public void InitializeBullet(BulletData data, PlayerWeaponHandler playerController, Vector2 initialForce)
+    public virtual void InitializeBullet(BulletData data, PlayerWeaponHandler playerController, Vector2 initialForce)
     {
         this.data = data;
         owner = playerController;

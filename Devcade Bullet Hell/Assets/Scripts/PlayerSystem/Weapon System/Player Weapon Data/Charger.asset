@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd14838f11786d49acc7758c0a8b519, type: 3}
-  m_Name: Spiral
+  m_Name: Charger
   m_EditorClassIdentifier: 
-  weaponName: Spiral
-  weaponInfo: Shoots a spiral of bullets around the player
+  weaponName: Charger
+  weaponInfo: Fires a large explosion after a delay
   burstCount: 1
-  bulletsPerBurst: 8
-  timeBetweenShots: 0.01
-  firePointsUsed: 17
-  chargeUpTime: 0.05
-  firingScreenShake: 1
-  bulletPrefab: {fileID: 4298952333547029504, guid: 7e3bc9472777aa741b47a7039704e1fc, type: 3}
+  bulletsPerBurst: 1
+  timeBetweenShots: -1
+  firePointsUsed: 1
+  chargeUpTime: 0.25
+  firingScreenShake: 8
+  bulletPrefab: {fileID: 0}
   firingParticle: {fileID: 0}
   bulletData: {fileID: 0}
