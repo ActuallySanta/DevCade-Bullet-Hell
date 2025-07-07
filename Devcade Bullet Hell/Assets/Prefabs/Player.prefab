@@ -1123,7 +1123,7 @@ MonoBehaviour:
   input: {fileID: 4160834998208378078}
   sprite: {fileID: 4242980055450141501}
   currHealth: 0
-  flashFreq: 0.1
+  flashFreq: 15
 --- !u!114 &218389490324420403
 MonoBehaviour:
   m_ObjectHideFlags: 0

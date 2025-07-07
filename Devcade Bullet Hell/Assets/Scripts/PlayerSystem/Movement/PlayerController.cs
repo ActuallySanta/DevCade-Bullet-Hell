@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerInputController input;
     [SerializeField] SpriteRenderer sprite;
 
+    private Color originalColor;
+
     private PlayerStateMachine stateMachine;
     private Player player;
 
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
         idleState = new Player_IdleState("idle", anim, this, data, stateMachine);
         moveState = new Player_MoveState("moving", anim, this, data, stateMachine);
 
+        originalColor = sprite.color;
 
         stateMachine.Initialize(idleState);
     }
@@ -49,10 +52,9 @@ public class PlayerController : MonoBehaviour
         inputVector = new Vector2(player.GetAxisRaw("HorizontalMovement"), player.GetAxisRaw("VerticalMovement"));
 
         if (Input.GetKeyDown(KeyCode.G)) { TakeDamage(1); }
-        
-        DamageFlash();
-        
-        //if (isInvincible)
+
+
+        if (isInvincible) DamageFlash();
 
         stateMachine.CurrState.DoChecks();
         stateMachine.CurrState.LogicUpdate();
@@ -95,11 +97,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(data.invincibliltyCooldown);
         isInvincible = false;
         //Reset color
-        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 255);
+        sprite.color = originalColor;
     }
 
     private void DamageFlash()
     {
-        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, Mathf.Cos(Time.time * flashFreq));
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, Math.Abs(Mathf.Cos(Time.time * flashFreq)));
     }
 }

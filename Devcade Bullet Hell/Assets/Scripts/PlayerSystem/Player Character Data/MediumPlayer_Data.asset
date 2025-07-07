@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   maxHealth: 5
+  fireRate: 0.1
+  timeBetweenWeapons: 0.1
+  invincibliltyCooldown: 1.25

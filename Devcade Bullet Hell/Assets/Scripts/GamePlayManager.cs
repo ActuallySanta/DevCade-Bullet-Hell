@@ -69,7 +69,7 @@ public class GamePlayManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        
+
         DontDestroyOnLoad(Instance);
         SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
@@ -153,9 +153,17 @@ public class GamePlayManager : MonoBehaviour
 
     public void UpdatePlayerHealthBars(object sender, float newHealthVal)
     {
-        if ((GameObject)sender == p1) p1HealthBar.value = newHealthVal;
+        if ((GameObject)sender == p1)
+        {
+            Debug.Log("Updated Player 1's health bar");
+            p1HealthBar.value = newHealthVal;
+        }
 
-        if ((GameObject)sender == p2) p2HealthBar.value = newHealthVal;
+        if ((GameObject)sender == p2)
+        {
+            Debug.Log("Updated Player 2's health bar");
+            p2HealthBar.value = newHealthVal;
+        }
     }
 
     public void StartGame()
