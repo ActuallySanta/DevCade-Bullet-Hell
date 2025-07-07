@@ -11,4 +11,7 @@ public class PlayerData : ScriptableObject
 
     [Tooltip("The time between each active weapon fires")]
     public float timeBetweenWeapons = .1f;
+
+    [Tooltip("How long the player is invincible for")]
+    public float invincibliltyCooldown = .5f;
 }

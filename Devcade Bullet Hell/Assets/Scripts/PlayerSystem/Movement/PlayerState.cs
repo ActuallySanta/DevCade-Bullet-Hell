@@ -30,12 +30,12 @@ public abstract class PlayerState
     public virtual void OnEnter()
     {
         startTime = Time.time;
-        anim.SetBool(animName, true);
+        //anim.SetBool(animName, true);
 
     }
 
     public virtual void OnExit()
     {
-        anim.SetBool(animName, false);
+        //anim.SetBool(animName, false);
     }
 }

@@ -1121,6 +1121,9 @@ MonoBehaviour:
   anim: {fileID: 1396932261225820440}
   rb: {fileID: 1824711339185137019}
   input: {fileID: 4160834998208378078}
+  sprite: {fileID: 4242980055450141501}
+  currHealth: 0
+  flashFreq: 0.1
 --- !u!114 &218389490324420403
 MonoBehaviour:
   m_ObjectHideFlags: 0
