@@ -1,9 +1,11 @@
 using UnityEngine;
 using Rewired;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public enum PlayerMode
 {
@@ -48,6 +50,14 @@ public class GamePlayManager : MonoBehaviour
     private GameObject p1;
     private GameObject p2;
 
+    public bool isPlaying { get; private set; }
+    [SerializeField] float timeBeforeRoundStart = 3f;
+
+    private void Start()
+    {
+        //TODO Remove after testing
+        StartCoroutine(nameof(BeginPlayerSpawning));
+    }
 
     private void Awake()
     {
@@ -59,10 +69,24 @@ public class GamePlayManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
+        
         DontDestroyOnLoad(Instance);
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
+    private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    {
+        if (arg1.name == "Game Scene")
+        {
+            StartCoroutine(nameof(BeginPlayerSpawning));
+        }
+    }
+
+    private IEnumerator BeginPlayerSpawning()
+    {
+        yield return new WaitForSeconds(timeBeforeRoundStart);
+        SpawnPlayers();
+    }
 
     /// <summary>
     /// Spawns in the players

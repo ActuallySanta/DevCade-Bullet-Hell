@@ -49,12 +49,16 @@ public class PlayerWeaponHandler : MonoBehaviour
 
             Debug.Log("Fired: " + weapon.name);
 
-            for (float i = 0; i < firePoints.Length; i++)
+            float angleToAdd = 360 / weapon.firePointsUsed;
+
+            for (float i = 0; i < weapon.firePointsUsed; i++)
             {
-                //Only use the firepoints
-                if ((i % weapon.firePointsUsed) == 0)
+                for (int j = 0; j < weapon.shotsPerFirePoint; j++)
                 {
-                    GameObject bullet = Instantiate(weapon.bulletPrefab, firePoints[(int)i].transform.position, firePoints[(int)i].transform.rotation);
+                    GameObject bullet = Instantiate(weapon.bulletPrefab, transform.position, transform.rotation);
+
+                    //Rotate the bullet to face the correct direction
+                    bullet.transform.Rotate(new Vector3(0, 0, angleToAdd * i));
 
                     bullet.transform.parent = null;
 
@@ -68,6 +72,8 @@ public class PlayerWeaponHandler : MonoBehaviour
 
                     yield return new WaitForSeconds(weapon.timeBetweenShots);
                 }
+
+                yield return new WaitForSeconds(weapon.timeBetweenFirePoints);
             }
 
             yield return new WaitForSeconds(data.timeBetweenWeapons);
