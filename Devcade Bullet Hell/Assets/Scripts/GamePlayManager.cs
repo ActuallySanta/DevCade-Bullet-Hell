@@ -43,7 +43,10 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] TMP_Text scoreText;
     [SerializeField] Slider p1HealthBar;
     [SerializeField] Slider p2HealthBar;
+
     [SerializeField] GameObject playerUIGameObject;
+    [SerializeField] GameObject p1UIGameObject;
+    [SerializeField] GameObject p2UIGameObject;
 
     public static GamePlayManager Instance;
 
@@ -93,6 +96,8 @@ public class GamePlayManager : MonoBehaviour
     /// </summary>
     void SpawnPlayers()
     {
+        playerUIGameObject.SetActive(true);
+
         if (currMode == PlayerMode.SinglePlayer)
         {
             p1 = Instantiate(playerPrefab, p1Spawnpoint);
@@ -105,6 +110,7 @@ public class GamePlayManager : MonoBehaviour
             p1.GetComponent<PlayerWeaponHandler>().data = p1Data;
             p1.GetComponent<PlayerWeaponHandler>().activeWeapons = p1Weapons;
             p1HealthBar.maxValue = p1Data.maxHealth;
+            p1UIGameObject.SetActive(true);
         }
         else if (currMode == PlayerMode.TwoPlayer)
         {
@@ -129,7 +135,11 @@ public class GamePlayManager : MonoBehaviour
             p2.GetComponent<PlayerWeaponHandler>().data = p2Data;
             p2.GetComponent<PlayerWeaponHandler>().activeWeapons = p2Weapons;
             p2HealthBar.maxValue = p2Data.maxHealth;
+
+            p1UIGameObject.SetActive(true);
+            p2UIGameObject.SetActive(true);
         }
+
     }
 
     /// <summary>
@@ -153,6 +163,8 @@ public class GamePlayManager : MonoBehaviour
 
     public void UpdatePlayerHealthBars(object sender, float newHealthVal)
     {
+        Debug.Log("Health bar event");
+
         if ((GameObject)sender == p1)
         {
             Debug.Log("Updated Player 1's health bar");

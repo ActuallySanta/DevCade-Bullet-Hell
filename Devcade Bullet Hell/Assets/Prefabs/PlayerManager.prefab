@@ -201,6 +201,9 @@ MonoBehaviour:
   p1HealthBar: {fileID: 8343470400139263469}
   p2HealthBar: {fileID: 6544894445683401072}
   playerUIGameObject: {fileID: 825008251540006755}
+  p1UIGameObject: {fileID: 2998564304090995823}
+  p2UIGameObject: {fileID: 7127520988406399779}
+  timeBeforeRoundStart: 3
 --- !u!1 &2879303551481407285
 GameObject:
   m_ObjectHideFlags: 0
