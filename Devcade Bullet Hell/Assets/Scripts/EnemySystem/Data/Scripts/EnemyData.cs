@@ -22,9 +22,10 @@ public class EnemyData : ScriptableObject
     public float patrolPointWaitTime = 1f;
     [Tooltip("How long will the enemy recoil after being hurt")]
     public float enemyHurtWaitTime = .25f;
+
+    [Header("General Attack Information")]
     [Tooltip("What kind of attack does the enemy use")]
     public AttackForm attackType;
-
 
     [Header("Ranged Attack")]
     [Tooltip("The bullets that the enemy can fire")]
@@ -39,5 +40,8 @@ public class EnemyData : ScriptableObject
     public float attackDuration = .25f;
     [Tooltip("What layers the enemy can hit")]
     public LayerMask attackableLayers;
+    [Tooltip("How much damage the attack does")]
+    public float attackDamage;
+
 
 }

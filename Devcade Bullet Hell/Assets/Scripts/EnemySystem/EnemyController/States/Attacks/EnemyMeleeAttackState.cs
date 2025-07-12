@@ -8,13 +8,11 @@ public class EnemyMeleeAttackState : EnemyAttackState
 
     public override void DoChecks()
     {
-        base.DoChecks();
         if (startTime + data.attackDuration <= Time.time) stateMachine.ChangeState(controller.idleState);
     }
 
     public override void LogicUpdate()
     {
-        base.LogicUpdate();
         FireWeapon();
     }
 
@@ -34,7 +32,13 @@ public class EnemyMeleeAttackState : EnemyAttackState
 
         foreach (Collider2D col in hitObj)
         {
-            //TODO Do Damage Logic
+            if (col.gameObject.CompareTag("Player"))
+            {
+                Debug.Log("Attacked: " + col.gameObject.name + " for " + data.attackDamage + " damage");
+                PlayerController playerController = col.gameObject.GetComponent<PlayerController>();
+
+                playerController.TakeDamage(data.attackDamage);
+            }
         }
     }
 }

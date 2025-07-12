@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public abstract class EnemyAttackState : EnemyState
@@ -6,15 +9,6 @@ public abstract class EnemyAttackState : EnemyState
     {
     }
 
-    public override void DoChecks()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void LogicUpdate()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public override void OnEnter()
     {
@@ -29,7 +23,6 @@ public abstract class EnemyAttackState : EnemyState
 
     public override void PhysicsUpdate()
     {
-        throw new System.NotImplementedException();
     }
 
     protected abstract void FireWeapon();
