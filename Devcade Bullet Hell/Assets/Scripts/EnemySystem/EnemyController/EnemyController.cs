@@ -3,25 +3,25 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private Animator anim;
+    [SerializeField] protected Animator anim;
 
     public EnemyData data;
 
-    float currHealth;
+    protected float currHealth;
 
     [HideInInspector] public List<Transform> patrolPoints = new List<Transform>();
 
-    private EnemyStateMachine stateMachine;
+    protected EnemyStateMachine stateMachine;
 
-    public EnemyIdleState idleState { get; private set; }
-    public EnemyMoveState moveState { get; private set; }
-    public EnemyHurtState hurtState { get; private set; }
-    public EnemyDeadState deadState { get; private set; }
-    public EnemyMeleeAttackState meleeAttackState { get; private set; }
+    public EnemyIdleState idleState { get; protected set; }
+    public EnemyMoveState moveState { get; protected set; }
+    public EnemyHurtState hurtState { get; protected set; }
+    public EnemyDeadState deadState { get; protected set; }
+    public EnemyAttackState attackState { get; protected set; }
     [HideInInspector] public bool canBeHurt = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public void Start()
+    public virtual void Start()
     {
         currHealth = data.maxHealth;
 
@@ -30,23 +30,22 @@ public class EnemyController : MonoBehaviour
         moveState = new EnemyMoveState("move", anim, this, data, stateMachine);
         hurtState = new EnemyHurtState("hurt", anim, this, data, stateMachine);
         deadState = new EnemyDeadState("dead", anim, this, data, stateMachine);
-        meleeAttackState = new EnemyMeleeAttackState("meleeAttack", anim, this, data, stateMachine);
         stateMachine.Initialize(idleState);
     }
 
     // Update is called once per frame
-    public void Update()
+    public virtual void Update()
     {
         stateMachine.CurrState.DoChecks();
         stateMachine.CurrState.LogicUpdate();
     }
 
-    public void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         stateMachine.CurrState.PhysicsUpdate();
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 7)//Player bullet layer
         {
@@ -66,7 +65,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void DestroyEnemy()
+    public virtual void DestroyEnemy()
     {
         Debug.Log("Destroyed: " + name);
         Destroy(gameObject);
