@@ -50,8 +50,8 @@ public class GamePlayManager : MonoBehaviour
 
     public static GamePlayManager Instance;
 
-    private GameObject p1;
-    private GameObject p2;
+    public GameObject p1 { get; private set; }
+    public GameObject p2 { get; private set; }
 
     public bool isPlaying { get; private set; }
     [SerializeField] float timeBeforeRoundStart = 3f;

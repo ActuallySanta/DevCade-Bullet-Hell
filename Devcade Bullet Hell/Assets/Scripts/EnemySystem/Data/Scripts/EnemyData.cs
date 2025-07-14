@@ -5,6 +5,13 @@ public enum AttackForm
     meleeAttack,
     rangedAttack,
 }
+public enum MoveType
+{
+    Patrol,
+    Chase,
+    Stationary,
+}
+
 
 [CreateAssetMenu(fileName = "New Enemy Data", menuName = "Data/Enemy/Create New Enemy Data")]
 public class EnemyData : ScriptableObject
@@ -23,9 +30,11 @@ public class EnemyData : ScriptableObject
     [Tooltip("How long will the enemy recoil after being hurt")]
     public float enemyHurtWaitTime = .25f;
 
-    [Header("General Attack Information")]
+    [Header("General Information")]
     [Tooltip("What kind of attack does the enemy use")]
     public AttackForm attackType;
+    [Tooltip("What kind of movement does the enemy use")]
+    public MoveType enemyMoveType;
 
     [Header("Ranged Attack")]
     [Tooltip("The bullets that the enemy can fire")]

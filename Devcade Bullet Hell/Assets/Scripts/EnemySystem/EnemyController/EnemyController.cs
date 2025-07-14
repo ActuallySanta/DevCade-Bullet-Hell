@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     protected float currHealth;
 
     [HideInInspector] public List<Transform> patrolPoints = new List<Transform>();
+    [HideInInspector] public Transform targetGameObject;
 
     protected EnemyStateMachine stateMachine;
 
@@ -27,7 +28,6 @@ public class EnemyController : MonoBehaviour
 
         stateMachine = new EnemyStateMachine();
         idleState = new EnemyIdleState("idle", anim, this, data, stateMachine);
-        moveState = new EnemyMoveState("move", anim, this, data, stateMachine);
         hurtState = new EnemyHurtState("hurt", anim, this, data, stateMachine);
         deadState = new EnemyDeadState("dead", anim, this, data, stateMachine);
         stateMachine.Initialize(idleState);
