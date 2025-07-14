@@ -2,6 +2,7 @@ using UnityEngine;
 using Rewired;
 using System.Collections;
 using System;
+using Unity.VisualScripting;
 public class PlayerController : MonoBehaviour
 {
     public PlayerData data;
@@ -17,6 +18,9 @@ public class PlayerController : MonoBehaviour
 
     public delegate void OnPlayerHurtEventHandler(object sender, float newHealthVal);
     public event OnPlayerHurtEventHandler onPlayerHurt;
+
+    public delegate void OnPlayerDieEventHandler(object sender);
+    public event OnPlayerDieEventHandler onPlayerDie;
 
     private bool isInvincible = false;
     public float currHealth;
@@ -51,17 +55,19 @@ public class PlayerController : MonoBehaviour
         //Get player movement input
         inputVector = new Vector2(player.GetAxisRaw("HorizontalMovement"), player.GetAxisRaw("VerticalMovement"));
 
+        //TODO Remove after testing
         if (Input.GetKeyDown(KeyCode.G)) { TakeDamage(1); }
 
 
         if (isInvincible) DamageFlash();
 
+        //Do the current state's update function 
         stateMachine.CurrState.DoChecks();
         stateMachine.CurrState.LogicUpdate();
     }
 
     private void FixedUpdate()
-    {
+    { 
         stateMachine.CurrState.PhysicsUpdate();
     }
 
@@ -75,31 +81,45 @@ public class PlayerController : MonoBehaviour
         if (isInvincible) return;
 
         currHealth -= _damage;
+
+        //If there are any active listeners for the event, invoke it with the given arguments
         onPlayerHurt?.Invoke(gameObject, currHealth);
 
+        //Check if the player has died
         if (currHealth <= 0)
         {
             OnPlayerDie();
         }
 
+        //Begin the invincibility timer
         isInvincible = true;
         StartCoroutine(nameof(ResetInvincibililty));
 
     }
 
+    /// <summary>
+    /// The method called <see langword="when"/> the player dies
+    /// </summary>
     private void OnPlayerDie()
     {
         Debug.Log($"Player {player.id} has died");
+
+        //If there are any active listeners for the event, invoke it with the given arguments
+        onPlayerDie?.Invoke(this);
     }
 
     private IEnumerator ResetInvincibililty()
     {
         yield return new WaitForSeconds(data.invincibliltyCooldown);
         isInvincible = false;
+
         //Reset color
         sprite.color = originalColor;
     }
 
+    /// <summary>
+    /// Fade the alpha value of the color of the sprite with a Cosine wave
+    /// </summary>
     private void DamageFlash()
     {
         sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, Math.Abs(Mathf.Cos(Time.time * flashFreq)));

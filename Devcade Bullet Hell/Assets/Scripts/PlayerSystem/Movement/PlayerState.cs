@@ -8,8 +8,19 @@ public abstract class PlayerState
 
     protected PlayerStateMachine stateMachine;
 
+    /// <summary>
+    /// The animator component that is attached to the central game object
+    /// </summary>
     protected Animator anim;
+
+    /// <summary>
+    /// The player controller component that is using this state
+    /// </summary>
     protected PlayerController controller;
+
+    /// <summary>
+    /// The class data 
+    /// </summary>
     protected PlayerData data;
 
     public PlayerState(string animName, Animator anim, PlayerController controller, PlayerData data,PlayerStateMachine stateMachine)

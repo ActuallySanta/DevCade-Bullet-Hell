@@ -51,6 +51,8 @@ public class EnemyData : ScriptableObject
     public LayerMask attackableLayers;
     [Tooltip("How much damage the attack does")]
     public float attackDamage;
+    [Tooltip("How close does the enemy have to be to switch to attacking")]
+    public float minAttackDistance = 0.01f;
 
 
 }

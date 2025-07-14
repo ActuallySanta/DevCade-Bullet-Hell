@@ -118,6 +118,7 @@ public class EnemyManager : MonoBehaviour
         }
 
         int patrollingEnemies = 0;
+        int pointCounts = 0;
 
         foreach (GameObject enemy in roundData.enemiesToSpawn)
         {
@@ -127,7 +128,8 @@ public class EnemyManager : MonoBehaviour
         }
 
         //Find how many patrol points to give each enemy (if they are patrol types)
-        int pointCounts = patrolPoints.Length / patrollingEnemies;
+        if (patrollingEnemies != 0) pointCounts = patrolPoints.Length / patrollingEnemies;
+
 
         //Spawn each new enemy at a pre-specified rate
         for (int i = 0; i < roundData.enemiesToSpawn.Length; i++)
@@ -140,9 +142,9 @@ public class EnemyManager : MonoBehaviour
                     SpawnEnemy(i, roundData, pointCounts);
                     break;
                 case MoveType.Chase:
-                    GameObject[] targetObjects = new GameObject[2];
+                    GameObject[] targetObjects = new GameObject[GamePlayManager.Instance.playerCount];
                     targetObjects[0] = GamePlayManager.Instance.p1;
-                    targetObjects[1] = GamePlayManager.Instance.p2;
+                    if (GamePlayManager.Instance.currMode == PlayerMode.TwoPlayer) targetObjects[1] = GamePlayManager.Instance.p2;
                     SpawnEnemy(i, roundData, targetObjects);
                     break;
             }

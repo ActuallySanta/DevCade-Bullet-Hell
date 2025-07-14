@@ -15,7 +15,9 @@ public enum PlayerMode
 
 public class GamePlayManager : MonoBehaviour
 {
-    public PlayerMode currMode;
+    public PlayerMode currMode { get; private set; }
+
+    public int playerCount { get; private set; }
 
     private Player player1;
     private Player player2;
@@ -59,6 +61,7 @@ public class GamePlayManager : MonoBehaviour
     private void Start()
     {
         //TODO Remove after testing
+        SelectGameMode(1f);
         StartCoroutine(nameof(BeginPlayerSpawning));
     }
 
@@ -148,8 +151,16 @@ public class GamePlayManager : MonoBehaviour
     /// <param name="gameMode">how many players are in the game</param>
     public void SelectGameMode(float gameMode)
     {
-        if (gameMode == 1) currMode = PlayerMode.SinglePlayer;
-        if (gameMode == 2) currMode = PlayerMode.TwoPlayer;
+        if (gameMode == 1)
+        {
+            currMode = PlayerMode.SinglePlayer;
+            playerCount = 1;
+        }
+        if (gameMode == 2)
+        {
+            currMode = PlayerMode.TwoPlayer;
+            playerCount = 2;
+        }
     }
 
     public void UpdateScore(float value)
