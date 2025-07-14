@@ -48,12 +48,16 @@ public class EnemyMeleeAttackState : EnemyAttackState
             {
                 //Add the target to the hit objects, preventing it from being hit again
                 hitObjects.Add(col.gameObject);
-                
+
                 Debug.Log("Attacked: " + col.gameObject.name + " for " + data.attackDamage + " damage");
 
                 //Do the actual damage
                 PlayerController playerController = col.gameObject.GetComponent<PlayerController>();
                 playerController.TakeDamage(data.attackDamage);
+
+                //Apply knockback
+                Rigidbody2D playerRb = col.gameObject.GetComponent<Rigidbody2D>();
+                Knockback.DoKnockback(data.knockbackForce, controller.transform, col.transform, playerRb);
             }
         }
     }
