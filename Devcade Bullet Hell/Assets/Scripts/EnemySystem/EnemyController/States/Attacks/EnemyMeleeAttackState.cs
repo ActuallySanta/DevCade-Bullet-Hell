@@ -13,12 +13,6 @@ public class EnemyMeleeAttackState : EnemyAttackState
     {
     }
 
-    public override void DoChecks()
-    {
-        //If the attack is over, stop attacking the player
-        if (startTime + data.attackDuration <= Time.time) stateMachine.ChangeState(controller.idleState);
-    }
-
     public override void LogicUpdate()
     {
         //Check to hit targets every frame

@@ -14,5 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   moveSpeed: 5
+  scoreValue: 1000
   maxPatrolPoints: 5
   patrolPointWaitTime: 1
+  enemyHurtWaitTime: 0.25
+  attackType: 0
+  enemyMoveType: 0
+  firePoint: {fileID: 0}
+  attackRounds: 0
+  attackHitBoxRad: 0
+  attackDuration: 0.25
+  attackableLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  attackDamage: 0
+  minAttackDistance: 0.01
+  knockbackForce: 15

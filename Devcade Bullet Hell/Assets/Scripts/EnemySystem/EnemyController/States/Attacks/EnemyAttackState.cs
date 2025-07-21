@@ -25,5 +25,11 @@ public abstract class EnemyAttackState : EnemyState
     {
     }
 
+    public override void DoChecks()
+    {        
+        //If the attack is over, stop attacking the player
+        if (startTime + data.attackDuration <= Time.time) stateMachine.ChangeState(controller.idleState);
+    }
+
     protected abstract void FireWeapon();
 }

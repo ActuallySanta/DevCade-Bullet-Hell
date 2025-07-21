@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class RangedEnemyController : MonoBehaviour
+public class RangedEnemyController : EnemyController
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+
+    public override void Start()
     {
-        
+        base.Start();
+
+        attackState = new EnemyRangedAttackState("attack", anim, this, data, stateMachine);
+
+        moveState = new EnemyPatrolState("move", anim, this, data, stateMachine);
     }
 }

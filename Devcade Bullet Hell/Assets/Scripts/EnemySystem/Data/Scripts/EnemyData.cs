@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public enum AttackForm
 {
@@ -38,9 +40,14 @@ public class EnemyData : ScriptableObject
 
     [Header("Ranged Attack")]
     [Tooltip("The bullets that the enemy can fire")]
-    public GameObject[] bulletPrefabs;
+    public GameObject[] bulletPrefab;
+    [Tooltip("The data associated with each bullet game object")]
+    public BulletData[] bulletData;
+
     [Tooltip("The point where the attacks originates from")]
     public Transform firePoint;
+    [Tooltip("How many times the bullet prefabs array will be fired")]
+    public float attackRounds;
 
     [Header("Melee Attack")]
     [Tooltip("The radius of the attack hitbox")]

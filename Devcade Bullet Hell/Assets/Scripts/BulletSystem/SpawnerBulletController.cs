@@ -10,7 +10,7 @@ public class SpawnerBulletController : BulletController
         spawnData = (SpawnerBulletData)data;
     }
 
-    public override void InitializeBullet(BulletData data, PlayerWeaponHandler playerController, Vector2 initialForce)
+    public override void InitializeBullet(BulletData data, GameObject playerController, Vector2 initialForce)
     {
         base.InitializeBullet(data, playerController, initialForce);
         StartCoroutine("SpawnRound");

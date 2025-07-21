@@ -79,4 +79,11 @@ public class EnemyController : MonoBehaviour
     {
         transform.position = Vector2.MoveTowards(transform.position, patrolPoint.position, data.moveSpeed * Time.deltaTime);
     }
+
+    public void SpawnBullet(GameObject bulletToSpawn, Vector2 direction, BulletData data)
+    {
+        BulletController controller = Instantiate(bulletToSpawn, transform).GetComponent<BulletController>();
+
+        controller.InitializeBullet(data, gameObject, direction);
+    }
 }

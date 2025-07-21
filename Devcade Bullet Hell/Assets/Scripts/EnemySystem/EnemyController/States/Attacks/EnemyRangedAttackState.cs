@@ -1,16 +1,24 @@
 using UnityEngine;
 
-public class EnemyRangedAttackState : MonoBehaviour
+public class EnemyRangedAttackState : EnemyAttackState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public EnemyRangedAttackState(string animName, Animator anim, EnemyController controller, EnemyData data, EnemyStateMachine stateMachine) : base(animName, anim, controller, data, stateMachine)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void LogicUpdate()
     {
-        
+        throw new System.NotImplementedException();
+    }
+
+    protected override void FireWeapon()
+    {
+        for (int i = 0; i < data.attackRounds; i++)
+        {
+            for (int j = 0; j < data.bulletPrefab.Length; j++)
+            {
+                controller.SpawnBullet(data.bulletPrefab[j], Vector2.down, data.bulletData[j]);
+            }
+        }
     }
 }
