@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0010c09e56b2040a95b041914fdc03, type: 3}
+  m_Name: 0-4
+  m_EditorClassIdentifier: 
+  enemiesToSpawn:
+  - {fileID: 5963902604664176130, guid: 1234e80a931aed346b9df8082d88f682, type: 3}
+  - {fileID: 5963902604664176130, guid: 1234e80a931aed346b9df8082d88f682, type: 3}
+  - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
+  - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
+  - {fileID: 5963902604664176130, guid: 1234e80a931aed346b9df8082d88f682, type: 3}
+  - {fileID: 5963902604664176130, guid: 1234e80a931aed346b9df8082d88f682, type: 3}
+  - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
+  - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
+  - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
+  - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
+  - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
+  - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
+  - {fileID: 5963902604664176130, guid: 1234e80a931aed346b9df8082d88f682, type: 3}
+  roundTimer: 10
+  spawnWaitTime: 5

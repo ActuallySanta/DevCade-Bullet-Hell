@@ -113,6 +113,7 @@ public class GamePlayManager : MonoBehaviour
             p1.GetComponent<PlayerWeaponHandler>().data = p1Data;
             p1.GetComponent<PlayerWeaponHandler>().activeWeapons = p1Weapons;
             p1HealthBar.maxValue = p1Data.maxHealth;
+            p1HealthBar.value = p1HealthBar.maxValue;
             p1UIGameObject.SetActive(true);
         }
         else if (currMode == PlayerMode.TwoPlayer)
@@ -127,6 +128,7 @@ public class GamePlayManager : MonoBehaviour
             p1.GetComponent<PlayerWeaponHandler>().data = p1Data;
             p1.GetComponent<PlayerWeaponHandler>().activeWeapons = p1Weapons;
             p1HealthBar.maxValue = p1Data.maxHealth;
+            p1HealthBar.value = p1HealthBar.maxValue;
 
             p2 = Instantiate(playerPrefab, p1Spawnpoint);
 
@@ -138,6 +140,7 @@ public class GamePlayManager : MonoBehaviour
             p2.GetComponent<PlayerWeaponHandler>().data = p2Data;
             p2.GetComponent<PlayerWeaponHandler>().activeWeapons = p2Weapons;
             p2HealthBar.maxValue = p2Data.maxHealth;
+            p2HealthBar.value = p2HealthBar.maxValue;
 
             p1UIGameObject.SetActive(true);
             p2UIGameObject.SetActive(true);
@@ -165,7 +168,7 @@ public class GamePlayManager : MonoBehaviour
 
     public void UpdateScore(float value)
     {
-        OnScoreUpdate(this);
+        OnScoreUpdate?.Invoke(this);
 
         currentScore += value;
 

@@ -19,7 +19,13 @@ public class EnemyDeadState : EnemyState
     public override void OnEnter()
     {
         base.OnEnter();
+        //Update the score
         GamePlayManager.Instance.UpdateScore(data.scoreValue);
+
+        //Update the active enemy count
+        EnemyManager.instance.activeEnemies--;
+
+
         controller.canBeHurt = false;
     }
 

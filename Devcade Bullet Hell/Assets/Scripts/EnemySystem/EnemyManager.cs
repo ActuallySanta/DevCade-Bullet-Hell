@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -12,9 +13,22 @@ public class EnemyManager : MonoBehaviour
 
     List<Transform> activePatrolPoints = new List<Transform>();
 
+    public static EnemyManager instance { get; private set; }
+
+    public int activeEnemies = 0;
+    public int currentRound = 0;
+
+    public bool roundInProgress { get; private set; }
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
 
 
-    int activeEnemies = 0;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,6 +43,14 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P)) StartCoroutine(RoundStart(roundDatas[0]));
+
+        if (activeEnemies == 0 && roundInProgress)
+        {
+            //TODO start the next round
+            roundInProgress = false;
+            currentRound++;
+
+        }
     }
 
     /// <summary>
