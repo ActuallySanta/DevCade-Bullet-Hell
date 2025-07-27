@@ -25,6 +25,8 @@ public class EnemyDeadState : EnemyState
         //Update the active enemy count
         EnemyManager.instance.activeEnemies--;
 
+        controller.col.enabled = false;
+
 
         controller.canBeHurt = false;
     }

@@ -18,6 +18,8 @@ public class EnemyManager : MonoBehaviour
     public int activeEnemies = 0;
     public int currentRound = 0;
 
+    [SerializeField] TMP_Text roundCounterText;
+
     public bool roundInProgress { get; private set; }
 
     private void Awake()
@@ -33,6 +35,8 @@ public class EnemyManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        roundInProgress = false;
+
         foreach (Transform patrolPoint in patrolPoints)
         {
             activePatrolPoints.Add(patrolPoint);
@@ -48,8 +52,8 @@ public class EnemyManager : MonoBehaviour
         {
             //TODO start the next round
             roundInProgress = false;
-            currentRound++;
 
+            StartCoroutine(RoundStart(roundDatas[currentRound]));
         }
     }
 
@@ -61,8 +65,6 @@ public class EnemyManager : MonoBehaviour
     /// <param name="pointCount">How many patrol points are given to each enemy</param>
     private void SpawnEnemy(int enemyInd, EnemyRoundData data, int pointCount)
     {
-        //Increase the amount of enemies that are active at the moment
-        activeEnemies++;
 
         //Spawn the enemy
         GameObject spawnedEnemy = Instantiate(data.enemiesToSpawn[enemyInd], spawnPoints[(int)Random.Range(0, spawnPoints.Count)]);
@@ -97,9 +99,6 @@ public class EnemyManager : MonoBehaviour
     /// <param name="targetObjects">The targets that the enemies will chase after</param>
     private void SpawnEnemy(int enemyInd, EnemyRoundData data, GameObject[] targetObjects)
     {
-        //Increase the amount of enemies that are active at the moment
-        activeEnemies++;
-
         //Spawn the enemy
         GameObject spawnedEnemy = Instantiate(data.enemiesToSpawn[enemyInd], spawnPoints[(int)Random.Range(0, spawnPoints.Count)]);
 
@@ -119,9 +118,6 @@ public class EnemyManager : MonoBehaviour
     /// <param name="data">The round data to pull from</param>
     private void SpawnEnemy(int enemyInd, EnemyRoundData data)
     {
-        //Increase the amount of enemies that are active at the moment
-        activeEnemies++;
-
         //Spawn the enemy
         GameObject spawnedEnemy = Instantiate(data.enemiesToSpawn[enemyInd], spawnPoints[(int)Random.Range(0, spawnPoints.Count)]);
 
@@ -131,6 +127,14 @@ public class EnemyManager : MonoBehaviour
 
     private IEnumerator RoundStart(EnemyRoundData roundData)
     {
+        yield return new WaitForSeconds(roundData.preRoundWaitTimer);
+
+        currentRound++;
+        roundCounterText.text = "ROUND: " + currentRound;
+        roundInProgress = true;
+        
+        activeEnemies = roundData.enemiesToSpawn.Length;
+
         activePatrolPoints.Clear();
 
         //Refresh the active patrol points
@@ -141,6 +145,7 @@ public class EnemyManager : MonoBehaviour
 
         int patrollingEnemies = 0;
         int pointCounts = 0;
+
 
         foreach (GameObject enemy in roundData.enemiesToSpawn)
         {
