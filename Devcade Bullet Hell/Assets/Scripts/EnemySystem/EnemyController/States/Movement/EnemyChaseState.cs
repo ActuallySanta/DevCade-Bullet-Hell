@@ -11,7 +11,7 @@ public class EnemyChaseState : EnemyMoveState
         base.DoChecks();
 
         //Switch to attacking if the enemy is close enough to the target
-        if (Vector3.Distance(controller.transform.position, controller.targetGameObject.position) <= data.minAttackDistance)
+        if (controller.targetGameObject != null && Vector3.Distance(controller.transform.position, controller.targetGameObject.position) <= data.minAttackDistance)
         {
             stateMachine.ChangeState(controller.attackState);
         }
@@ -35,8 +35,10 @@ public class EnemyChaseState : EnemyMoveState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-
-        //Move towards the target at a specified rate
-        controller.transform.position = Vector3.MoveTowards(controller.transform.position, controller.targetGameObject.position, data.moveSpeed);
+        if (controller.targetGameObject != null)
+        {
+            //Move towards the target at a specified rate
+            controller.transform.position = Vector3.MoveTowards(controller.transform.position, controller.targetGameObject.position, data.moveSpeed);
+        }
     }
 }

@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c44910e9f16e7449dc5b8cecb723c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRespawnTimer: 3
   p1Spawnpoint: {fileID: 8501516566072930976}
   p2Spawnpoint: {fileID: 1699660175020798604}
   playerPrefab: {fileID: 6217681880485403010, guid: f67117e1fa69e8844a3802a0c9a2e71d, type: 3}
@@ -203,6 +204,7 @@ MonoBehaviour:
   playerUIGameObject: {fileID: 825008251540006755}
   p1UIGameObject: {fileID: 2998564304090995823}
   p2UIGameObject: {fileID: 7127520988406399779}
+  activePlayers: []
   timeBeforeRoundStart: 3
 --- !u!1 &2879303551481407285
 GameObject:
@@ -1236,7 +1238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a589b6b68d1b1641a8ed0e961bde0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeIconPrefab: {fileID: 8402740927372222367}
+  lifeIconPrefab: {fileID: 5857560861413631944, guid: 67e0bd6607f12b24fa5002be8617f390, type: 3}
 --- !u!1 &8899057219478763581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,11 +1577,6 @@ PrefabInstance:
 --- !u!224 &2575096576530038184 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 462217621912651263, guid: 67e0bd6607f12b24fa5002be8617f390, type: 3}
-  m_PrefabInstance: {fileID: 2726565408548206679}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8402740927372222367 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5857560861413631944, guid: 67e0bd6607f12b24fa5002be8617f390, type: 3}
   m_PrefabInstance: {fileID: 2726565408548206679}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5843615667322010396

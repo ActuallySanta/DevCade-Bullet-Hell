@@ -17,9 +17,13 @@ public class LifeIconManager : MonoBehaviour
 
     private void OnLifeUpdate(object sender)
     {
-        for (int i = lifeIcons.Count - 1; i >= 0; i--)
+        Debug.Log("Updated Lives");
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            Destroy(lifeIcons[i].gameObject);
+            Debug.Log("Destroyed: " + transform.GetChild(i).name);
+            Destroy(transform.GetChild(i).GetComponent<Image>());
+            Destroy(transform.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < GamePlayManager.Instance.currLives; i++)

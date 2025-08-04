@@ -57,13 +57,15 @@ public class GamePlayManager : MonoBehaviour
     public GameObject p1 { get; private set; }
     public GameObject p2 { get; private set; }
 
+    public List<GameObject> activePlayers = new List<GameObject>();
+
     public bool isPlaying { get; private set; }
     [SerializeField] float timeBeforeRoundStart = 3f;
 
-    public float playerLives = 3f;
-
     private void Start()
     {
+        currLives = 3;
+        OnLifeUpdate!.Invoke(this);
         //TODO Remove after testing
         SelectGameMode(1f);
         StartCoroutine(nameof(BeginPlayerSpawning));
@@ -120,6 +122,8 @@ public class GamePlayManager : MonoBehaviour
             p1HealthBar.maxValue = p1Data.maxHealth;
             p1HealthBar.value = p1HealthBar.maxValue;
             p1UIGameObject.SetActive(true);
+
+            activePlayers.Add(p1);
         }
         else if (currMode == PlayerMode.TwoPlayer)
         {
@@ -136,6 +140,8 @@ public class GamePlayManager : MonoBehaviour
             p1HealthBar.maxValue = p1Data.maxHealth;
             p1HealthBar.value = p1HealthBar.maxValue;
 
+            activePlayers.Add(p1);
+
             p2 = Instantiate(playerPrefab, p2Spawnpoint);
 
             p2.transform.parent = null;
@@ -148,6 +154,8 @@ public class GamePlayManager : MonoBehaviour
             p2.GetComponent<PlayerWeaponHandler>().activeWeapons = p2Weapons;
             p2HealthBar.maxValue = p2Data.maxHealth;
             p2HealthBar.value = p2HealthBar.maxValue;
+
+            activePlayers.Add(p2);
 
             p1UIGameObject.SetActive(true);
             p2UIGameObject.SetActive(true);
@@ -205,11 +213,12 @@ public class GamePlayManager : MonoBehaviour
         playerUIGameObject.SetActive(true);
     }
 
-    private void BeginPlayerRespawn(GameObject sender)
+    private void BeginPlayerRespawn(int sender)
     {
-        if (playerLives > 0)
+        if (currLives > 0)
         {
-            playerLives--;  
+            currLives--;
+            OnLifeUpdate?.Invoke(this);
             StartCoroutine(RespawnPlayer(sender));
         }
         else
@@ -223,11 +232,14 @@ public class GamePlayManager : MonoBehaviour
         SceneManager.LoadScene("Game Over");
     }
 
-    private IEnumerator RespawnPlayer(GameObject playerToRespawn)
+    private IEnumerator RespawnPlayer(int playerToRespawn)
     {
+        if (playerToRespawn == 0) activePlayers.Remove(p1);
+        if (playerToRespawn == 1) activePlayers.Remove(p2);
+
         yield return new WaitForSeconds(playerRespawnTimer);
 
-        if (playerToRespawn == p1)
+        if (playerToRespawn == 0)
         {
             p1 = Instantiate(playerPrefab, p1Spawnpoint);
 
@@ -241,9 +253,9 @@ public class GamePlayManager : MonoBehaviour
             p1.GetComponent<PlayerWeaponHandler>().activeWeapons = p1Weapons;
             p1HealthBar.maxValue = p1Data.maxHealth;
             p1HealthBar.value = p1HealthBar.maxValue;
-            p1UIGameObject.SetActive(true);
+            activePlayers.Add(p1);
         }
-        else if (playerToRespawn == p2)
+        else if (playerToRespawn == 1)
         {
             p2 = Instantiate(playerPrefab, p2Spawnpoint);
 
@@ -257,6 +269,12 @@ public class GamePlayManager : MonoBehaviour
             p2.GetComponent<PlayerWeaponHandler>().activeWeapons = p2Weapons;
             p2HealthBar.maxValue = p2Data.maxHealth;
             p2HealthBar.value = p2HealthBar.maxValue;
+            activePlayers.Add(p2);
+        }
+
+        foreach (EnemyController enemy in EnemyManager.instance.enemiesLeft)
+        {
+            if (enemy.targetGameObject == null) enemy.targetGameObject = activePlayers[playerToRespawn].transform;
         }
     }
 

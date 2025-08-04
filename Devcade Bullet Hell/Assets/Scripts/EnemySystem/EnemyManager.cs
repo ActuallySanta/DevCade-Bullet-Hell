@@ -16,6 +16,8 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance { get; private set; }
 
     public int activeEnemies = 0;
+    public List<EnemyController> enemiesLeft;
+
     public int currentRound = 0;
 
     [SerializeField] TMP_Text roundCounterText;
@@ -74,6 +76,7 @@ public class EnemyManager : MonoBehaviour
 
         //Get the enemy controller
         EnemyController controller = spawnedEnemy.GetComponent<EnemyController>();
+        enemiesLeft.Add(controller);
 
         //Add in the patrol points
 
@@ -101,6 +104,8 @@ public class EnemyManager : MonoBehaviour
     {
         //Spawn the enemy
         GameObject spawnedEnemy = Instantiate(data.enemiesToSpawn[enemyInd], spawnPoints[(int)Random.Range(0, spawnPoints.Count)]);
+
+        enemiesLeft.Add(spawnedEnemy.GetComponent<EnemyController>());
 
         //Remove the enemy's parent
         spawnedEnemy.transform.parent = null;
@@ -132,7 +137,7 @@ public class EnemyManager : MonoBehaviour
         currentRound++;
         roundCounterText.text = "ROUND: " + currentRound;
         roundInProgress = true;
-        
+
         activeEnemies = roundData.enemiesToSpawn.Length;
 
         activePatrolPoints.Clear();
@@ -162,6 +167,12 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < roundData.enemiesToSpawn.Length; i++)
         {
             EnemyController controller = roundData.enemiesToSpawn[i].GetComponent<EnemyController>();
+
+            //Don't spawn new enemies while there are no active players
+            if (GamePlayManager.Instance.activePlayers.Count == 0)
+            {
+                yield return new WaitUntil(() => GamePlayManager.Instance.activePlayers.Count > 0);
+            }
 
             switch (controller.data.enemyMoveType)
             {

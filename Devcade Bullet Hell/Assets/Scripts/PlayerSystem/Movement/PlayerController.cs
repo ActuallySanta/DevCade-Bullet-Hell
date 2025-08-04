@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public delegate void OnPlayerHurtEventHandler(object sender, float newHealthVal);
     public event OnPlayerHurtEventHandler onPlayerHurt;
 
-    public delegate void OnPlayerDieEventHandler(GameObject sender);
+    public delegate void OnPlayerDieEventHandler(int playerID);
     public event OnPlayerDieEventHandler onPlayerDie;
 
     private bool isInvincible = false;
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"Player {player.id} has died");
 
         //If there are any active listeners for the event, invoke it with the given arguments
-        onPlayerDie?.Invoke(gameObject);
+        onPlayerDie?.Invoke(input.PlayerID);
 
         Destroy(gameObject);
     }

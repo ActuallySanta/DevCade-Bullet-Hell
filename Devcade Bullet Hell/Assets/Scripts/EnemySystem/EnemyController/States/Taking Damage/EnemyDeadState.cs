@@ -24,6 +24,7 @@ public class EnemyDeadState : EnemyState
 
         //Update the active enemy count
         EnemyManager.instance.activeEnemies--;
+        EnemyManager.instance.enemiesLeft.Remove(controller);
 
         controller.col.enabled = false;
 
