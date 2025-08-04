@@ -23,7 +23,9 @@ public class RangedEnemyController : EnemyController
         if (attackTimer <= 0)
         {
             stateMachine.ChangeState(attackState);
-            attackTimer = data.attackCooldown;
+
+            //Add random offset to the cooldown
+            attackTimer = data.attackCooldown * Random.Range(0.25f, 1);
         }
     }
 }

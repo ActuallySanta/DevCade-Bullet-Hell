@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public delegate void OnPlayerHurtEventHandler(object sender, float newHealthVal);
     public event OnPlayerHurtEventHandler onPlayerHurt;
 
-    public delegate void OnPlayerDieEventHandler(object sender);
+    public delegate void OnPlayerDieEventHandler(GameObject sender);
     public event OnPlayerDieEventHandler onPlayerDie;
 
     private bool isInvincible = false;
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate()
-    { 
+    {
         stateMachine.CurrState.PhysicsUpdate();
     }
 
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         {
             BulletController bullet = collision.gameObject.GetComponent<BulletController>();
 
-           TakeDamage(bullet.data.bulletDamage);
+            TakeDamage(bullet.data.bulletDamage);
         }
     }
 
@@ -116,7 +116,9 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"Player {player.id} has died");
 
         //If there are any active listeners for the event, invoke it with the given arguments
-        onPlayerDie?.Invoke(this);
+        onPlayerDie?.Invoke(gameObject);
+
+        Destroy(gameObject);
     }
 
     private IEnumerator ResetInvincibililty()

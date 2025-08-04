@@ -33,7 +33,7 @@ public class EnemyRangedAttackState : EnemyAttackState
             {
                 Debug.Log("Fired Bullet");
 
-                controller.SpawnBullet(data.bulletPrefab[j], Vector2.down, data.bulletData[j]);
+                controller.SpawnBullet(data.bulletPrefab[j], Vector2.down * data.bulletData[j].bulletSpeed, data.bulletData[j]);
             }
         }
     }

@@ -22,6 +22,8 @@ public class GamePlayManager : MonoBehaviour
     private Player player1;
     private Player player2;
 
+    [SerializeField] private float playerRespawnTimer = 3f;
+
     [SerializeField] Transform p1Spawnpoint;
     [SerializeField] Transform p2Spawnpoint;
 
@@ -57,6 +59,8 @@ public class GamePlayManager : MonoBehaviour
 
     public bool isPlaying { get; private set; }
     [SerializeField] float timeBeforeRoundStart = 3f;
+
+    public float playerLives = 3f;
 
     private void Start()
     {
@@ -110,6 +114,7 @@ public class GamePlayManager : MonoBehaviour
             p1.GetComponent<PlayerInputController>().InitializePlayer(0);
             p1.GetComponent<PlayerController>().data = p1Data;
             p1.GetComponent<PlayerController>().onPlayerHurt += UpdatePlayerHealthBars;
+            p1.GetComponent<PlayerController>().onPlayerDie += BeginPlayerRespawn;
             p1.GetComponent<PlayerWeaponHandler>().data = p1Data;
             p1.GetComponent<PlayerWeaponHandler>().activeWeapons = p1Weapons;
             p1HealthBar.maxValue = p1Data.maxHealth;
@@ -125,18 +130,20 @@ public class GamePlayManager : MonoBehaviour
             p1.GetComponent<PlayerInputController>().InitializePlayer(0);
             p1.GetComponent<PlayerController>().data = p1Data;
             p1.GetComponent<PlayerController>().onPlayerHurt += UpdatePlayerHealthBars;
+            p1.GetComponent<PlayerController>().onPlayerDie += BeginPlayerRespawn;
             p1.GetComponent<PlayerWeaponHandler>().data = p1Data;
             p1.GetComponent<PlayerWeaponHandler>().activeWeapons = p1Weapons;
             p1HealthBar.maxValue = p1Data.maxHealth;
             p1HealthBar.value = p1HealthBar.maxValue;
 
-            p2 = Instantiate(playerPrefab, p1Spawnpoint);
+            p2 = Instantiate(playerPrefab, p2Spawnpoint);
 
             p2.transform.parent = null;
 
             p2.GetComponent<PlayerInputController>().InitializePlayer(1);
             p2.GetComponent<PlayerController>().data = p2Data;
             p2.GetComponent<PlayerController>().onPlayerHurt += UpdatePlayerHealthBars;
+            p2.GetComponent<PlayerController>().onPlayerDie += BeginPlayerRespawn;
             p2.GetComponent<PlayerWeaponHandler>().data = p2Data;
             p2.GetComponent<PlayerWeaponHandler>().activeWeapons = p2Weapons;
             p2HealthBar.maxValue = p2Data.maxHealth;
@@ -197,4 +204,63 @@ public class GamePlayManager : MonoBehaviour
         SceneManager.LoadScene("Game Scene");
         playerUIGameObject.SetActive(true);
     }
+
+    private void BeginPlayerRespawn(GameObject sender)
+    {
+        if (playerLives > 0)
+        {
+            playerLives--;  
+            StartCoroutine(RespawnPlayer(sender));
+        }
+        else
+        {
+            GameOver();
+        }
+    }
+
+    private void GameOver()
+    {
+        SceneManager.LoadScene("Game Over");
+    }
+
+    private IEnumerator RespawnPlayer(GameObject playerToRespawn)
+    {
+        yield return new WaitForSeconds(playerRespawnTimer);
+
+        if (playerToRespawn == p1)
+        {
+            p1 = Instantiate(playerPrefab, p1Spawnpoint);
+
+            p1.transform.parent = null;
+
+            p1.GetComponent<PlayerInputController>().InitializePlayer(0);
+            p1.GetComponent<PlayerController>().data = p1Data;
+            p1.GetComponent<PlayerController>().onPlayerHurt += UpdatePlayerHealthBars;
+            p1.GetComponent<PlayerController>().onPlayerDie += BeginPlayerRespawn;
+            p1.GetComponent<PlayerWeaponHandler>().data = p1Data;
+            p1.GetComponent<PlayerWeaponHandler>().activeWeapons = p1Weapons;
+            p1HealthBar.maxValue = p1Data.maxHealth;
+            p1HealthBar.value = p1HealthBar.maxValue;
+            p1UIGameObject.SetActive(true);
+        }
+        else if (playerToRespawn == p2)
+        {
+            p2 = Instantiate(playerPrefab, p2Spawnpoint);
+
+            p2.transform.parent = null;
+
+            p2.GetComponent<PlayerInputController>().InitializePlayer(1);
+            p2.GetComponent<PlayerController>().data = p2Data;
+            p2.GetComponent<PlayerController>().onPlayerHurt += UpdatePlayerHealthBars;
+            p2.GetComponent<PlayerController>().onPlayerDie += BeginPlayerRespawn;
+            p2.GetComponent<PlayerWeaponHandler>().data = p2Data;
+            p2.GetComponent<PlayerWeaponHandler>().activeWeapons = p2Weapons;
+            p2HealthBar.maxValue = p2Data.maxHealth;
+            p2HealthBar.value = p2HealthBar.maxValue;
+        }
+    }
+
+
+
+
 }

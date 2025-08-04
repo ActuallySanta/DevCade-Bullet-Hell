@@ -17,6 +17,8 @@ public class BulletController : MonoBehaviour
 
         destroy.destroyTimer = data.bulletLifeTime;
 
+        Debug.Log(initialForce);
+
         //Add initial force
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(initialForce, ForceMode2D.Impulse);

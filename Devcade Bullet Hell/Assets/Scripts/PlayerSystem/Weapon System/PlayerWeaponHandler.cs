@@ -67,7 +67,7 @@ public class PlayerWeaponHandler : MonoBehaviour
                     if (bController != null)
                     {
                         //Initialize bullet
-                        bController.InitializeBullet(weapon.bulletData, gameObject, bullet.transform.up * weapon.bulletData.bulletSpeed);
+                        bController.InitializeBullet(weapon.bulletData, gameObject, bullet.transform.up.normalized * weapon.bulletData.bulletSpeed);
                     }
 
                     yield return new WaitForSeconds(weapon.timeBetweenShots);
