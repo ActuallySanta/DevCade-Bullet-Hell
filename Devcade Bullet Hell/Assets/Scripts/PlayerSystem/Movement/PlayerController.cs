@@ -3,6 +3,7 @@ using Rewired;
 using System.Collections;
 using System;
 using Unity.VisualScripting;
+using System.Xml;
 public class PlayerController : MonoBehaviour
 {
     public PlayerData data;
@@ -74,6 +75,16 @@ public class PlayerController : MonoBehaviour
     public void SetVelocity(float _vel)
     {
         rb.linearVelocity = inputVector * _vel;
+    }
+
+    public virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 9)//Enemy bullet layer
+        {
+            BulletController bullet = collision.gameObject.GetComponent<BulletController>();
+
+           TakeDamage(bullet.data.bulletDamage);
+        }
     }
 
     public void TakeDamage(float _damage)
