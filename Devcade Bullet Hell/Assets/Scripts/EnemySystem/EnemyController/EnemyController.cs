@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] protected Animator anim;
-    
+
     public Collider2D col { get; protected set; }
 
     public EnemyData data;
@@ -23,9 +23,13 @@ public class EnemyController : MonoBehaviour
     public EnemyAttackState attackState { get; protected set; }
     [HideInInspector] public bool canBeHurt = true;
 
+    public Transform firePoint { get; protected set; }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public virtual void Start()
     {
+        firePoint = transform.Find("Fire Point").transform;
+
         col = GetComponent<Collider2D>();
 
         currHealth = data.maxHealth;

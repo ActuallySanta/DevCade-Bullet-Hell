@@ -32,8 +32,11 @@ public class EnemyMeleeAttackState : EnemyAttackState
 
     protected override void FireWeapon()
     {
+
+        Debug.Log("Attacked");
+
         //Get all the objects on the enemy's attackable layers that are within the range of the melee attack
-        Collider2D[] hitObj = Physics2D.OverlapCircleAll(data.firePoint.position, data.attackHitBoxRad, data.attackableLayers);
+        Collider2D[] hitObj = Physics2D.OverlapCircleAll(controller.firePoint.position, data.attackHitBoxRad, data.attackableLayers);
 
         foreach (Collider2D col in hitObj)
         {
