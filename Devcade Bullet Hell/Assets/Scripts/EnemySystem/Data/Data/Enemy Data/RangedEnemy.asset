@@ -24,8 +24,8 @@ MonoBehaviour:
   - {fileID: 4298952333547029504, guid: 7e3bc9472777aa741b47a7039704e1fc, type: 3}
   bulletData:
   - {fileID: 11400000, guid: 0bb662282a241824eadadd359fdb4eb4, type: 2}
-  firePoint: {fileID: 0}
   attackRounds: 1
+  attackCooldown: 5
   attackHitBoxRad: 0
   attackDuration: 0.25
   attackableLayers:

@@ -6,9 +6,23 @@ public class EnemyRangedAttackState : EnemyAttackState
     {
     }
 
+    public override void DoChecks()
+    {
+        base.DoChecks();
+
+        if (Time.time > startTime + data.attackDuration)
+        {
+            stateMachine.ChangeState(controller.idleState);
+        }
+    }
+
     public override void LogicUpdate()
     {
-        throw new System.NotImplementedException();
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
     }
 
     protected override void FireWeapon()
@@ -17,6 +31,8 @@ public class EnemyRangedAttackState : EnemyAttackState
         {
             for (int j = 0; j < data.bulletPrefab.Length; j++)
             {
+                Debug.Log("Fired Bullet");
+
                 controller.SpawnBullet(data.bulletPrefab[j], Vector2.down, data.bulletData[j]);
             }
         }

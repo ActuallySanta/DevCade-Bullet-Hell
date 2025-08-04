@@ -20,13 +20,15 @@ MonoBehaviour:
   enemyHurtWaitTime: 0.25
   attackType: 0
   enemyMoveType: 1
-  bulletPrefabs: []
+  bulletPrefab: []
+  bulletData: []
   firePoint: {fileID: 0}
+  attackRounds: 0
   attackHitBoxRad: 1
   attackDuration: 0.25
   attackableLayers:
     serializedVersion: 2
     m_Bits: 64
   attackDamage: 1
-  minAttackDistance: 0.01
+  minAttackDistance: 1.5
   knockbackForce: 15

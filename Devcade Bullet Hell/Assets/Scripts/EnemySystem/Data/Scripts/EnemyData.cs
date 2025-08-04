@@ -44,10 +44,11 @@ public class EnemyData : ScriptableObject
     [Tooltip("The data associated with each bullet game object")]
     public BulletData[] bulletData;
 
-    [Tooltip("The point where the attacks originates from")]
-    public Transform firePoint;
     [Tooltip("How many times the bullet prefabs array will be fired")]
     public float attackRounds;
+
+    [Tooltip("How long the enemy will wait after returning to moving state before firing again")]
+    public float attackCooldown;
 
     [Header("Melee Attack")]
     [Tooltip("The radius of the attack hitbox")]

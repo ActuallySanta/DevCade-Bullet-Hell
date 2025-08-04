@@ -47,7 +47,7 @@ public class PlayerWeaponHandler : MonoBehaviour
             //Wait for charge up time
             yield return new WaitForSeconds(weapon.chargeUpTime);
 
-            Debug.Log("Fired: " + weapon.name);
+            //Debug.Log("Fired: " + weapon.name);
 
             float angleToAdd = 360 / weapon.firePointsUsed;
 

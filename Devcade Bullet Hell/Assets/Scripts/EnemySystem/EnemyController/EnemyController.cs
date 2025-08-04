@@ -92,6 +92,9 @@ public class EnemyController : MonoBehaviour
     {
         BulletController controller = Instantiate(bulletToSpawn, transform).GetComponent<BulletController>();
 
+        controller.transform.parent = null;
+        
         controller.InitializeBullet(data, gameObject, direction);
+
     }
 }
