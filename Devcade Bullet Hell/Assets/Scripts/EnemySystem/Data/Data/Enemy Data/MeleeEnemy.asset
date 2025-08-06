@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MeleeEnemy
   m_EditorClassIdentifier: 
   maxHealth: 3
-  moveSpeed: 0.075
+  moveSpeed: 0.15
   scoreValue: 1000
   maxPatrolPoints: 0
   patrolPointWaitTime: 1
@@ -22,8 +22,8 @@ MonoBehaviour:
   enemyMoveType: 1
   bulletPrefab: []
   bulletData: []
-  firePoint: {fileID: 0}
   attackRounds: 0
+  attackCooldown: 0
   attackHitBoxRad: 1
   attackDuration: 0.25
   attackableLayers:

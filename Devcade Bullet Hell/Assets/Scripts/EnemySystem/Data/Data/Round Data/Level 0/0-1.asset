@@ -23,5 +23,5 @@ MonoBehaviour:
   - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
   - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
   - {fileID: 5963902604664176130, guid: c672a69e848af8c4ca3dce33b2daf3b0, type: 3}
-  roundTimer: 10
-  spawnWaitTime: 5
+  preRoundWaitTimer: 0
+  spawnWaitTime: 1.5
