@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 11701031}
   - component: {fileID: 11701030}
   m_Layer: 0
-  m_Name: Rewired Input Manager
+  m_Name: '[DEBUG] Rewired Input Manager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
