@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using Rewired;
 public class MenuManager : MonoBehaviour
 {
     public enum ActiveMenuState
@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     }
 
     [SerializeField] GameObject[] menuGameObjects;
+    [SerializeField] GameObject cursorPrefab;
     /*
      * 0 = main menu
      * 1 = start game
@@ -23,13 +24,27 @@ public class MenuManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        foreach (Player item in ReInput.players.GetPlayers())
+        {
+            SpawnCursors(item.id);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    private void SpawnCursors(int playerID)
+    {
+        GameObject cursor = Instantiate(cursorPrefab, transform);
+
+        CursorDetection detect = cursor.GetComponent<CursorDetection>();
+        detect.playerID = playerID;
+
+        CursorMovement movement = cursor.GetComponent<CursorMovement>();
+        movement.playerID = playerID;
     }
 
     public void ChangeActiveMenuState(string targetMenuState)
@@ -63,7 +78,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    
+
 
     public void ExitGame()
     {

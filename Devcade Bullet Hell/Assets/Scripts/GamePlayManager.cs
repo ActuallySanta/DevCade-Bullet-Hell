@@ -13,6 +13,38 @@ public enum PlayerMode
     TwoPlayer
 }
 
+public enum PlayerSelectingState
+{
+    NoPlayerSelecting,
+    Player1Selecting,
+    Player2Selecting,
+    BothPlayersSelected,
+}
+
+[Serializable]
+public class PlayerDataDictionary
+{
+    [SerializeField] PlayerDataDictionaryEntry[] entries;
+
+    public Dictionary<string, PlayerData> ToDictionary()
+    {
+        Dictionary<string, PlayerData> dict = new Dictionary<string, PlayerData>();
+
+        foreach (var item in entries)
+        {
+            dict.Add(item.name, item.data);
+        }
+        return dict;
+    }
+}
+
+[Serializable]
+public class PlayerDataDictionaryEntry
+{
+    [SerializeField] public string name;
+    [SerializeField] public PlayerData data;
+}
+
 public class GamePlayManager : MonoBehaviour
 {
     public PlayerMode currMode { get; private set; }
@@ -32,10 +64,14 @@ public class GamePlayManager : MonoBehaviour
     public List<PlayerWeaponData> p1Weapons = new List<PlayerWeaponData>();
     public List<PlayerWeaponData> p2Weapons = new List<PlayerWeaponData>();
 
+    [SerializeField] PlayerDataDictionary serializedDict;
+
+    private Dictionary<string, PlayerData> playerDataDictionary;
+
     public PlayerData p1Data;
     public PlayerData p2Data;
 
-
+    #region Events
     public delegate void OnScoreUpdateHandler(object sender);
     public OnScoreUpdateHandler OnScoreUpdate;
     public float currentScore { get; private set; }
@@ -43,7 +79,9 @@ public class GamePlayManager : MonoBehaviour
     public delegate void OnLifeUpdateHandler(object sender);
     public OnLifeUpdateHandler OnLifeUpdate;
     public float currLives { get; private set; }
+    #endregion
 
+    #region UI Fields
     [SerializeField] TMP_Text scoreText;
     [SerializeField] Slider p1HealthBar;
     [SerializeField] Slider p2HealthBar;
@@ -51,6 +89,7 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] GameObject playerUIGameObject;
     [SerializeField] GameObject p1UIGameObject;
     [SerializeField] GameObject p2UIGameObject;
+    #endregion
 
     public static GamePlayManager Instance;
 
@@ -60,15 +99,23 @@ public class GamePlayManager : MonoBehaviour
     public List<GameObject> activePlayers = new List<GameObject>();
 
     public bool isPlaying { get; private set; }
+
     [SerializeField] float timeBeforeRoundStart = 3f;
+
+    public PlayerSelectingState CurrPlayerSelectState { get; private set; }
 
     private void Start()
     {
+        playerDataDictionary = serializedDict.ToDictionary();
+
         currLives = 3;
-        OnLifeUpdate!.Invoke(this);
+        OnLifeUpdate?.Invoke(this);
+
+        CurrPlayerSelectState = PlayerSelectingState.NoPlayerSelecting;
+
         //TODO Remove after testing
-        SelectGameMode(1f);
-        StartCoroutine(nameof(BeginPlayerSpawning));
+        //SelectGameMode(1f);
+        //StartCoroutine(nameof(BeginPlayerSpawning));
     }
 
     private void Awake()
@@ -178,6 +225,21 @@ public class GamePlayManager : MonoBehaviour
         {
             currMode = PlayerMode.TwoPlayer;
             playerCount = 2;
+        }
+
+        CurrPlayerSelectState = PlayerSelectingState.Player1Selecting;
+    }
+
+    public void SelectClass(string className)
+    {
+        switch (CurrPlayerSelectState)
+        {
+            case PlayerSelectingState.Player1Selecting:
+                playerDataDictionary.TryGetValue(className, out p1Data);
+                break;
+            case PlayerSelectingState.Player2Selecting:
+                playerDataDictionary.TryGetValue(className, out p2Data);
+                break;
         }
     }
 
