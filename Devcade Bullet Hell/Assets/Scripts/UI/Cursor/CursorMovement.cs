@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using Rewired;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Rewired;
 
-public class CursorMovement : MonoBehaviour {
+public class CursorMovement : MonoBehaviour
+{
 
     public float speed;
     private Player player;
@@ -15,7 +17,8 @@ public class CursorMovement : MonoBehaviour {
         player = ReInput.players.GetPlayer(playerID);
     }
 
-    void Update () {
+    void Update()
+    {
 
         float x = player.GetAxis("UIHorizontal");
         float y = player.GetAxis("UIVertical");
@@ -29,5 +32,10 @@ public class CursorMovement : MonoBehaviour {
         //    transform.position.z);
 
 
+    }
+
+    public void MoveMouse(Vector2 obj)
+    {
+        transform.position += new Vector3(obj.x, obj.y, 0) * Time.deltaTime * speed;
     }
 }

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Rewired;
+using Rewired.Components;
 public class MenuManager : MonoBehaviour
 {
     public enum ActiveMenuState
@@ -14,6 +15,9 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] GameObject[] menuGameObjects;
     [SerializeField] GameObject cursorPrefab;
+
+    Rewired.PlayerMouse pMouse;
+
     /*
      * 0 = main menu
      * 1 = start game
@@ -24,6 +28,8 @@ public class MenuManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        pMouse = GetComponent<Rewired.PlayerMouse>();
+
         foreach (Player item in ReInput.players.GetPlayers())
         {
             SpawnCursors(item.id);
@@ -39,13 +45,12 @@ public class MenuManager : MonoBehaviour
     private void SpawnCursors(int playerID)
     {
         GameObject cursor = Instantiate(cursorPrefab, transform);
+        CursorMovement cMovement = cursor.GetComponent<CursorMovement>();
 
-        CursorDetection detect = cursor.GetComponent<CursorDetection>();
-        detect.playerID = playerID;
-
-        CursorMovement movement = cursor.GetComponent<CursorMovement>();
-        movement.playerID = playerID;
+        pMouse.ScreenPositionChangedEvent += cMovement.MoveMouse;
     }
+
+
 
     public void ChangeActiveMenuState(string targetMenuState)
     {

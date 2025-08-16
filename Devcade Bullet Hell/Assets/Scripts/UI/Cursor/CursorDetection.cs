@@ -32,6 +32,8 @@ public class CursorDetection : MonoBehaviour
             //Get the first thing the cursor is hovering over
             Transform raycastCharacter = results[0].gameObject.transform;
 
+            Debug.Log(raycastCharacter);
+
             Button selectedButton = raycastCharacter.GetComponent<Button>();
 
             if (selectedButton != null)
