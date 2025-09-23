@@ -21,6 +21,8 @@ public enum PlayerSelectingState
     BothPlayersSelected,
 }
 
+//Made so that dictionaries show up in the inspector
+#region Serializable Dictionary
 [Serializable]
 public class PlayerDataDictionary
 {
@@ -44,69 +46,93 @@ public class PlayerDataDictionaryEntry
     [SerializeField] public string name;
     [SerializeField] public PlayerData data;
 }
+#endregion
 
 public class GamePlayManager : MonoBehaviour
 {
+    //How many players will be playing the game
     public PlayerMode currMode { get; private set; }
 
+    //An integer representation of the players (used for enemy spawning)
     public int playerCount { get; private set; }
 
+    //Rewired Players (used for input)
     private Player player1;
     private Player player2;
 
+    //How long the player will wait before respawning (in seconds)
     [SerializeField] private float playerRespawnTimer = 3f;
 
+    //References to the empty game objects where player objects will spawn
     [SerializeField] Transform p1Spawnpoint;
     [SerializeField] Transform p2Spawnpoint;
 
     [SerializeField] GameObject playerPrefab;
 
+    //A list of the active weapons equipped to each player
     public List<PlayerWeaponData> p1Weapons = new List<PlayerWeaponData>();
     public List<PlayerWeaponData> p2Weapons = new List<PlayerWeaponData>();
 
-    [SerializeField] PlayerDataDictionary serializedDict;
+    //Holds a reference to each player class data along with a string of it's name
+    [SerializeField] PlayerDataDictionary PlayerData;
 
     private Dictionary<string, PlayerData> playerDataDictionary;
 
+    //The data for the class that each player has selected
     public PlayerData p1Data;
     public PlayerData p2Data;
 
     #region Events
+    //Event triggered to update the Score UI
     public delegate void OnScoreUpdateHandler(object sender);
     public OnScoreUpdateHandler OnScoreUpdate;
     public float currentScore { get; private set; }
 
+    //Event triggered when the player has to respawn, used to update UI and subtract from life pool
     public delegate void OnLifeUpdateHandler(object sender);
     public OnLifeUpdateHandler OnLifeUpdate;
     public float currLives { get; private set; }
     #endregion
 
     #region UI Fields
+    //Displays the player(s)' score
     [SerializeField] TMP_Text scoreText;
+
+    //Shows the current health of each player
     [SerializeField] Slider p1HealthBar;
     [SerializeField] Slider p2HealthBar;
 
+    //The parent UI object of all player UI
     [SerializeField] GameObject playerUIGameObject;
+
+    //The object specifically holding each player's UI
     [SerializeField] GameObject p1UIGameObject;
     [SerializeField] GameObject p2UIGameObject;
     #endregion
 
+    //The singleton reference for this script
     public static GamePlayManager Instance;
 
+    //A reference to the player prefab instance
     public GameObject p1 { get; private set; }
     public GameObject p2 { get; private set; }
 
+    //A list of all active player prefab instances
     public List<GameObject> activePlayers = new List<GameObject>();
 
+    //Global bool for if the game is being run, used for pauses
     public bool isPlaying { get; private set; }
 
+    //The inter round cooldown (in seconds)
     [SerializeField] float timeBeforeRoundStart = 3f;
 
+    //The current state of the player select screen (used to decide what data gets affected)
     public PlayerSelectingState CurrPlayerSelectState { get; private set; }
 
     private void Start()
     {
-        playerDataDictionary = serializedDict.ToDictionary();
+        //Initialize the manager
+        playerDataDictionary = PlayerData.ToDictionary();
 
         currLives = 3;
         OnLifeUpdate?.Invoke(this);
@@ -120,6 +146,7 @@ public class GamePlayManager : MonoBehaviour
 
     private void Awake()
     {
+        //Set the singleton up
         if (Instance == null)
         {
             Instance = this;
@@ -130,6 +157,8 @@ public class GamePlayManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(Instance);
+
+        //Subscribe a method to this event
         SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
@@ -141,6 +170,9 @@ public class GamePlayManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawns in players after a set amount of time
+    /// </summary>
     private IEnumerator BeginPlayerSpawning()
     {
         yield return new WaitForSeconds(timeBeforeRoundStart);
@@ -230,6 +262,10 @@ public class GamePlayManager : MonoBehaviour
         CurrPlayerSelectState = PlayerSelectingState.Player1Selecting;
     }
 
+    /// <summary>
+    /// Select a type of class data for each player (tied to UI Buttons)
+    /// </summary>
+    /// <param name="className">The name of each class</param>
     public void SelectClass(string className)
     {
         switch (CurrPlayerSelectState)
@@ -243,6 +279,10 @@ public class GamePlayManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A public method used to affect the global player score
+    /// </summary>
+    /// <param name="value">The value that will be added to the total</param>
     public void UpdateScore(float value)
     {
         OnScoreUpdate?.Invoke(this);
@@ -252,6 +292,11 @@ public class GamePlayManager : MonoBehaviour
         scoreText.text = "SCORE: " + currentScore.ToString();
     }
 
+    /// <summary>
+    /// Update the health value for specific players
+    /// </summary>
+    /// <param name="sender">The player game object that called the method</param>
+    /// <param name="newHealthVal">The new health value of the player</param>
     public void UpdatePlayerHealthBars(object sender, float newHealthVal)
     {
         Debug.Log("Health bar event");
@@ -269,12 +314,19 @@ public class GamePlayManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Switch to the game scene (used in the menu scene)
+    /// </summary>
     public void StartGame()
     {
         SceneManager.LoadScene("Game Scene");
         playerUIGameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// Check if the player can respawn and either respawn the player or switch to game over
+    /// </summary>
+    /// <param name="sender">Which player is being respawned</param>
     private void BeginPlayerRespawn(int sender)
     {
         if (currLives > 0)
@@ -289,6 +341,9 @@ public class GamePlayManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Just switch the scene to the Game Over scene
+    /// </summary>
     private void GameOver()
     {
         SceneManager.LoadScene("Game Over");
