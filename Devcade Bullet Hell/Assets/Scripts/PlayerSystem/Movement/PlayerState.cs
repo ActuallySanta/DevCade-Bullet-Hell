@@ -3,7 +3,10 @@ using UnityEngine;
 
 public abstract class PlayerState
 {
+    //The name of the animation clip that the state is tied to, will be played for the duration of the state
     public string animName;
+
+    //The time that the state was entered
     public float startTime;
 
     protected PlayerStateMachine stateMachine;

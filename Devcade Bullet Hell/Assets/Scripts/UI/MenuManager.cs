@@ -5,6 +5,7 @@ using Rewired;
 using Rewired.Components;
 public class MenuManager : MonoBehaviour
 {
+    //Shows which parent menu is active
     public enum ActiveMenuState
     {
         MainMenu,
@@ -13,7 +14,10 @@ public class MenuManager : MonoBehaviour
         HowToPlay,
     }
 
+    //All the menu parent game objects
     [SerializeField] GameObject[] menuGameObjects;
+
+    //A reference to the gamepad controllable cursor
     [SerializeField] GameObject cursorPrefab;
 
     Rewired.PlayerMouse pMouse;
@@ -36,12 +40,10 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// Spawn a game pad controlled cursor and assign it to each player
+    /// </summary>
+    /// <param name="playerID"></param>
     private void SpawnCursors(int playerID)
     {
         GameObject cursor = Instantiate(cursorPrefab, transform);
@@ -51,11 +53,15 @@ public class MenuManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Choose a new menu to display (used by UI buttons)
+    /// </summary>
+    /// <param name="targetMenuState">The name of the menu gameObject you want to activate</param>
     public void ChangeActiveMenuState(string targetMenuState)
     {
         foreach (var menu in menuGameObjects) { menu.SetActive(false); }
 
+        //Convert the string to an enum (only once)
         ActiveMenuState parsedState;
         Enum.TryParse(targetMenuState, out parsedState);
 
@@ -84,7 +90,9 @@ public class MenuManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Close the game
+    /// </summary>
     public void ExitGame()
     {
         Application.Quit();

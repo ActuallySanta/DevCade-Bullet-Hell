@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// A generic Rigidbody based way to apply a set amount of force to a rigidbody2D
+/// </summary>
 public static class Knockback
 {
     /// <summary>

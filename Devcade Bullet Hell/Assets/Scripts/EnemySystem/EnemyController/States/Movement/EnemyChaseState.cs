@@ -35,6 +35,7 @@ public class EnemyChaseState : EnemyMoveState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        //If the target exists
         if (controller.targetGameObject != null)
         {
             //Move towards the target at a specified rate

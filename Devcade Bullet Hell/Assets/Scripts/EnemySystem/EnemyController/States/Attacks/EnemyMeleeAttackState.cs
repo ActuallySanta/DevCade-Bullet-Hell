@@ -30,9 +30,11 @@ public class EnemyMeleeAttackState : EnemyAttackState
         hitObjects.Clear();
     }
 
+    /// <summary>
+    /// Override of the generic FireWeapon method that does a melee attack instead
+    /// </summary>
     protected override void FireWeapon()
     {
-
         Debug.Log("Attacked");
 
         //Get all the objects on the enemy's attackable layers that are within the range of the melee attack

@@ -2,11 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+//The types of attack that the enemies can use
 public enum AttackForm
 {
     meleeAttack,
     rangedAttack,
 }
+
+//The types of movements that the enemies can use
 public enum MoveType
 {
     Patrol,
